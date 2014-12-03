@@ -4,7 +4,7 @@
 // Version:		1.0
 // Author:		Kevin S. O'Day
 // Course:		CS 1410 Section 002
-// Instructor:	Dennis Fairclough
+// Instructor:		Dennis Fairclough
 // Project:		Proj_09
 // Date:		November 2014
 // Date:		11/26/14 9:59 AM
