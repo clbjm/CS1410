@@ -36,36 +36,36 @@ enum ERROR_TYPE{ EOF_E, INT_E, DBL_E, CHR_E, STR_E, INVALID };
 class IOException
 {
 	//Member Data
-private:
-	string _message;
-	int _errorFlag;
+	private:
+		string _message;
+		int _errorFlag;
 	//Member functions
-public:
-
-	///----------------- Constructor -----------------------
-	/// Purpose: To create a IOException object given its parameters
-	/// Parameters: String reference containing an error message
-	///				integer representing error type
-	///-------------------------- End ------------------------------
-	IOException(string&, int);
-
-	///----------------- Default Destructor -----------------------
-	/// Purpose: To initialize all data members to their default
-	/// Parameters: None
-	///-------------------------- End ------------------------------
-	~IOException();
-
-	///-------------------- Getter Function -----------------------
-	/// Purpose: To return the exception message
-	/// Returns: String containing error message
-	///-------------------------- End ------------------------------
-	string GetMessage();
-
-	///-------------------- Getter Function -----------------------
-	/// Purpose: To return the exception error flag
-	/// Returns: Integer representing an error flag
-	///-------------------------- End ------------------------------
-	int GetErrorFlag();
+	public:
+	
+		///----------------- Constructor -----------------------
+		/// Purpose: To create a IOException object given its parameters
+		/// Parameters: String reference containing an error message
+		///				integer representing error type
+		///-------------------------- End ------------------------------
+		IOException(string&, int);
+	
+		///----------------- Default Destructor -----------------------
+		/// Purpose: To initialize all data members to their default
+		/// Parameters: None
+		///-------------------------- End ------------------------------
+		~IOException();
+	
+		///-------------------- Getter Function -----------------------
+		/// Purpose: To return the exception message
+		/// Returns: String containing error message
+		///-------------------------- End ------------------------------
+		string GetMessage();
+	
+		///-------------------- Getter Function -----------------------
+		/// Purpose: To return the exception error flag
+		/// Returns: Integer representing an error flag
+		///-------------------------- End ------------------------------
+		int GetErrorFlag();
 
 };//End class IOException
 
