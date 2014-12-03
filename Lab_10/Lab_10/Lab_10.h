@@ -1,14 +1,14 @@
 //============================================================================
 // Project Prolog
-// Name:		Lab_10.h
-// Purpose:		Practice recursion
-// Version:		1.0
-// Author:		Kevin S. O'Day
-// Course:		CS 1410 Section 002
+// Name:		    Lab_10.h
+// Purpose:		  Practice recursion
+// Version:		  1.0
+// Author:		  Kevin S. O'Day
+// Course:		  CS 1410 Section 002
 // Instructor:	Dennis Fairclough
-// Project:		Lab_10
-// Date:		November 2014
-// Date:		11/26/14 9:59 AM
+// Project:		  Lab_10
+// Date:		    November 2014
+// Date:		    11/26/14 9:59 AM
 //============================================================================
 // I declare that the following source code was written by me, or provided
 // by the instructor for this project. I understand that copying
