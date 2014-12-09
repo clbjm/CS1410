@@ -2,10 +2,10 @@
 // File Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
-// Project: Proj_07
-// Purpose: Demonstrate understanding of Vectors, Arrays, & pointers.
-// Date: October 2014 
-// Date: 10/28/14 9:59 AM
+// Project: Proj_12
+// Purpose: Demonstrate understanding of dynamic storage & memorty management.
+// Date: December 2014 
+// Date: 12/09/14 9:59 AM
 //============================================================================
 
 // I declare that the following source code was written by me, or provided
@@ -29,6 +29,15 @@ MyVector::MyVector()
 	_size = 0;
 }
 
+MyVector::MyVector(MyVector& vector)
+{
+	//copy constructor 
+	//free the memory in this object
+	Free();
+	//copy everything (including the dynamically allocated memory) in the vector object
+	Copy(vector);
+}
+
 MyVector::MyVector(int n)
 {
 	//A parameterized constructor that creates a vector of capacity n
@@ -41,23 +50,16 @@ MyVector::MyVector(int n)
 //Note that you program should not have any memory leaks.
 MyVector::~MyVector()
 {
-	//loop through all the addresses in _pData and set each to NULL
-	for (_capacity; _capacity > 0; _capacity--)
-	{
-		_pData[_capacity - 1] = NULL;
-	}
-	//delete the array
-	delete[] _pData;
-	//pointers should be set tu NULL after calling delete to return storage to the heap
-	_pData = NULL;
+	//free up all the dynamically allocated memory.
+	Free();
 }
 
-int MyVector::size()
+int MyVector::size() const
 {
 	//returns the size of your vector.
 	return _size;
 }
-int MyVector::capacity()
+int MyVector::capacity() const
 {
 	//returns the capacity of the vector.
 	return _capacity;
@@ -65,14 +67,8 @@ int MyVector::capacity()
 void MyVector::clear()
 {
 	//deletes all of the elements from the vector and resets its size to zero and its capacity to two.
-
-	//loop through all the addresses in pInt and set each to NULL
-	for (_capacity; _capacity > 0; _capacity--)
-	{
-		_pData[_capacity - 1] = NULL;
-	}
-	//delete the array
-	delete[] _pData;
+	// Free the memory on the heap
+	Free();
 	//create a new array with default capacity
 	_pData = new int[DEFAULT_CAPACITY];
 	_capacity = DEFAULT_CAPACITY;
@@ -101,14 +97,8 @@ void MyVector::push_back(int n)
 			newArray[count - 1] = _pData[count - 1];
 		}
 
-		//delete _pData
-		//loop through all the addresses in pInt and set each to NULL
-		for (int count = _capacity; count > 0; count--)
-		{
-			_pData[count - 1] = NULL;
-		}
-		//delete the array
-		delete[] _pData;
+		// Free the memory on the heap
+		Free();
 		//change _pData to newArray
 		_pData = newArray;
 		_capacity *= GROW_SIZE;
@@ -119,7 +109,7 @@ void MyVector::push_back(int n)
 	}
 }
 
-int MyVector::at(int n)
+int MyVector::at(int n) const
 {
 	//returns the value of the element at position n in the vector. 
 	//If the index n is greater than the size( ) of the vector, 
@@ -131,3 +121,62 @@ int MyVector::at(int n)
 	//if its in range, return the value at the given index
 	return _pData[n];
 }
+
+
+void MyVector::Copy(MyVector& vector)
+{
+	this->_capacity = vector._capacity;
+	this->_size = vector._size;
+	// make a new copy of the array on the heap
+	this->_pData = new int[_capacity]{NULL};
+	//copy all of vector._pData into new Array
+	for (int count = _capacity; count > 0; count--)
+	{
+		this->_pData[count - 1] = vector._pData[count - 1];
+	}
+}
+
+void MyVector::Free(void)
+{
+	// free up all the dynamically allocated memory
+	//loop through all the addresses in _pData and set each to NULL
+	//for (_capacity; _capacity > 0; _capacity--)
+	//{
+	//	_pData[_capacity - 1] = NULL;
+	//}
+	//delete the array
+	delete[] _pData;
+	//pointers should be set to NULL after calling delete to return storage to the heap
+	_pData = NULL;
+}
+
+MyVector& MyVector::operator = (MyVector& rho)
+{
+	// check to see if this object is equal to the right hand object
+	if (this != &rho)
+	{
+		//free the memory in this object
+		Free();
+		//copy everything (including the dynamically allocated memory) in the rho object
+		Copy(rho);
+	}
+	//Return a reference to this object.
+	return *this;
+}
+
+
+//-------------------------Stand Alone Functions ----------------------------------
+
+ostream& operator<<(ostream& out, const MyVector& rho)
+{
+	int capacity = rho.capacity();
+	out << "capacity = " << capacity << endl;
+	int size = rho.size();
+	out << "size = " << size << endl;
+	for (int i = 0; i < size; i++)
+	{
+		out << "element " << i << " = " << rho.at(i) << endl;
+	}
+	return out;
+}
+

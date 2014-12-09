@@ -2,10 +2,10 @@
 // File Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
-// Project: Proj_07
-// Purpose: Demonstrate understanding of Vectors, Arrays, & pointers.
-// Date: October 2014 
-// Date: 10/28/14 9:59 AM
+// Project: Proj_12
+// Purpose: Demonstrate understanding of dynamic storage & memorty management.
+// Date: December 2014 
+// Date: 12/09/14 9:59 AM
 //============================================================================
 
 // I declare that the following source code was written by me, or provided
@@ -39,6 +39,12 @@ class MyVector
 		///-------------------------- End ------------------------------
 		MyVector();
 
+		///----------------- Copy Constructor -----------------------
+		/// Purpose: Facilitate the copying of a MyVector object
+		/// Parameters: MyVector object to be copied
+		///-------------------------- End ------------------------------
+		MyVector(MyVector&);
+
 		///----------------- Constructor -----------------------
 		/// Purpose: To construct a MyVector object, setting its capacity to provided value
 		/// Parameters: integer for capacity
@@ -56,14 +62,14 @@ class MyVector
 		/// Parameters: none
 		/// Returns: integer current number of elements in the array
 		///---------------------------End-------------------------------
-		int size();
+		int size() const;
 
 		///--------------------capacity Function---------------------
 		/// Purpose: get the total capacity of the array
 		/// Parameters: none
 		/// Returns: integer total capacity of the array
 		///---------------------------End-------------------------------
-		int capacity();
+		int capacity() const;
 
 		///--------------------clear Function---------------------
 		/// Purpose: Clar all the elements in the array, reset size and capacity to default
@@ -84,5 +90,33 @@ class MyVector
 		/// Parameters: integer for index
 		/// Returns: integer at given index, throws exception if index is greater than size
 		///---------------------------End--------------------------------------------------
-		int at(int);
+		int at(int) const;
+
+		///--------------------Copy Function-------------------------------------------------
+		/// Purpose: Copies the object
+		/// Parameters: Reference to a MyVector object
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void Copy(MyVector&);
+
+		///--------------------Free Function-------------------------------------------------
+		/// Purpose: Frees (Deletes the pointers) the memory associated with the object
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void Free(void);
+
+		///-------------------- assignment operator overloading Function -----------------------
+		/// Purpose: Assigns the values of one MyVector object to another
+		/// Returns: Reference to MyVector object
+		///-------------------------- End ------------------------------
+		MyVector& operator = (MyVector&);
+
 };
+
+
+///-------------------- stream insertion overloading Function -----------------------
+/// Purpose: Converts the object into a form that can be printed and overloads the stream insertion operator
+/// Returns: reference to ostream object containing a representation of the object.
+///-------------------------- End ------------------------------
+ostream& operator<<(ostream& out, const MyVector& rho);

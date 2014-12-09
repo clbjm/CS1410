@@ -1,11 +1,11 @@
 //============================================================================
-// Project Prolog
+// File Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
-// Project: Proj_07
-// Purpose: Demonstrate understanding of Vectors, Arrays, & pointers.
-// Date: October 2014 
-// Date: 10/28/14 9:59 AM
+// Project: Lab_13
+// Purpose: Demonstrate understanding of function & class templates.
+// Date: December 2014 
+// Date: 12/09/14 9:59 AM
 //============================================================================
 
 // I declare that the following source code was written by me, or provided
@@ -15,11 +15,18 @@
 // this policy.
 //----------------------------------------------------------------------
 
-#include "MyVector.h"
+#include <iostream>
+#include "Pair.h"
+using namespace std;
 
-///--------------------TestMyVector Function---------------------
-/// Purpose: Test the MyVector class
-/// Parameters: none
-/// Returns: None
-///---------------------------End-------------------------------
-void TestMyVector();
+
+int main()
+{
+	Pair<char> letters('a', 'd');
+	cout << "\nThe first letter is: " << letters.getFirst();
+	cout << "\nThe second letter is: " << letters.getSecond();
+
+	cout << endl;
+	system("Pause");
+	return 0;
+}

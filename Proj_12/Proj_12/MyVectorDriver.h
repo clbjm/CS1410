@@ -2,10 +2,10 @@
 // Project Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
-// Project: Proj_07
-// Purpose: Demonstrate understanding of Vectors, Arrays, & pointers.
-// Date: October 2014 
-// Date: 10/28/14 9:59 AM
+// Project: Proj_12
+// Purpose: Demonstrate understanding of dynamic storage & memorty management.
+// Date: December 2014 
+// Date: 12/09/14 9:59 AM
 //============================================================================
 
 // I declare that the following source code was written by me, or provided
