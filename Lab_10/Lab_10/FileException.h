@@ -4,7 +4,7 @@
 // Version:		1.0
 // Author:		Kevin S. O'Day
 // Course:		CS 1410 Section 002
-// Instructor:	Dennis Fairclough
+// Instructor:		Dennis Fairclough
 // Project:		Proj_09
 // Date:		November 2014
 // Date:		11/26/14 9:59 AM
@@ -34,36 +34,36 @@ using namespace std;
 class FileException
 {
 	//Member Data
-private:
-	string _message;
-	int _errorFlag;
+	private:
+		string _message;
+		int _errorFlag;
 	//Member functions
-public:
-
-	///----------------- Constructor -----------------------
-	/// Purpose: To create a FileException object given its parameters
-	/// Parameters: String reference containing an error message
-	///				integer representing error type
-	///-------------------------- End ------------------------------
-	FileException(string&, int);
-
-	///----------------- Default Destructor -----------------------
-	/// Purpose: To initialize all data members to their default
-	/// Parameters: None
-	///-------------------------- End ------------------------------
-	~FileException();
-
-	///-------------------- Getter Function -----------------------
-	/// Purpose: To return the exception message
-	/// Returns: String containing error message
-	///-------------------------- End ------------------------------
-	string GetMessage();
-
-	///-------------------- Getter Function -----------------------
-	/// Purpose: To return the exception error flag
-	/// Returns: Integer representing an error flag
-	///-------------------------- End ------------------------------
-	int GetErrorFlag();
+	public:
+	
+		///----------------- Constructor -----------------------
+		/// Purpose: To create a FileException object given its parameters
+		/// Parameters: String reference containing an error message
+		///				integer representing error type
+		///-------------------------- End ------------------------------
+		FileException(string&, int);
+	
+		///----------------- Default Destructor -----------------------
+		/// Purpose: To initialize all data members to their default
+		/// Parameters: None
+		///-------------------------- End ------------------------------
+		~FileException();
+	
+		///-------------------- Getter Function -----------------------
+		/// Purpose: To return the exception message
+		/// Returns: String containing error message
+		///-------------------------- End ------------------------------
+		string GetMessage();
+	
+		///-------------------- Getter Function -----------------------
+		/// Purpose: To return the exception error flag
+		/// Returns: Integer representing an error flag
+		///-------------------------- End ------------------------------
+		int GetErrorFlag();
 
 };//End class FileException
 
