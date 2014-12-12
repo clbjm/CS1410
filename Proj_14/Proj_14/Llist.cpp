@@ -37,28 +37,40 @@ Llist::Llist(Llist& lst)
 	//--- Test for empty list ------------
 	if (lst._headNode == NULL)
 		return;
-	//--- Get Current List object initialized ------------
-	//deallocate the current linked list
-	delete this->_headNode;
-	//this->_head = this->_end = NULL;
-	//initialize _nodeCount
-	_nodeCount = 0;
-	//set _head & _end to first Node in lst
-	//this->_headNode = this->_endNode = new Node(lst._headNode->GetNumber());  //First Node
-	//Node* tempPtr = lst._head;
-	//nCount, used to check that object reference count _nodeCount is working
-	_nodeCount++;
-	Node* tempNodePtr = NULL;
-	Node* nodePtr = lst._headNode->GetNextNode(); //Second node
-	while (nodePtr != NULL)
+
+	// check to see if this object is equal to the right hand object
+	if (this != &lst)
 	{
-		//tempNodePtr = new Node(nodePtr->GetNumber());
-		tempNodePtr->SetNextNode(this->_headNode);
-		this->_headNode = tempNodePtr;
-		nodePtr = nodePtr->GetNextNode();
-		_nodeCount++;
+		ClearList();
+		Node* oldNode = lst.GetFirst();
+		//clone the old head node
+		_headNode = oldNode->Clone();
+		//get the next old node
+		oldNode = oldNode->GetNextNode();
+		//clone the next old node
+		Node* newNode = oldNode->Clone();
+		//set Next Node for head node
+		_headNode->SetNextNode(newNode);
+		//set prev node for next node to the new _headNode
+		newNode->SetPrevNode(_headNode);
+		//get the pointer to the next node in the old list
+		oldNode = oldNode->GetNextNode();
+		while (oldNode != NULL)
+		{
+			//clone the old Node
+			Node* nextNode = oldNode->Clone();
+			//set the next node of newNode
+			newNode->SetNextNode(nextNode);
+			//set the prev node of nextNode to newNode
+			nextNode->SetPrevNode(newNode);
+			//point newNode to nextNode						//TODO check this
+			newNode = nextNode;
+			//get the pointer to the next node in the old list
+			oldNode = oldNode->GetNextNode();
+		}
+		_endNode = newNode;
+		_nodeCount = lst.GetCount();
 	}
-	
 	//print out the copy constructor message
 	string classname = typeid(*this).name();
 	cout << classname << COPY_CONSTRUCTOR << endl;
@@ -70,13 +82,13 @@ Llist::Llist(int nodeCount)
 	_endNode = NULL;
 	_nodeCount = nodeCount;
 	string classname = typeid(*this).name();
-	cout << classname << CONSTRUCTOR << endl;
+	//cout << classname << CONSTRUCTOR << endl;
 }
 
 Llist::~Llist()
 {
 	string classname = typeid(*this).name();
-	cout << classname << DESTRUCTOR << endl;
+	//cout << classname << DESTRUCTOR << endl;
 }
 
 Node* Llist::GetFirst(void)
@@ -87,6 +99,28 @@ Node* Llist::GetFirst(void)
 Node* Llist::GetLast(void)
 {
 	return _endNode;
+}
+
+unsigned int Llist::GetCount(void)
+{
+	return _nodeCount;
+}
+
+void Llist::SetLast(Node* endNode)
+{
+	endNode->SetNextNode(NULL);
+	_endNode = endNode;
+}
+
+void Llist::SetFirst(Node* headNode)
+{
+	headNode->SetPrevNode(NULL);
+	_headNode = headNode;
+}
+
+void Llist::SetCount(unsigned int nodeCount)
+{
+	_nodeCount = nodeCount;
 }
 
 void Llist::Push_Front(Node* nPtr)
@@ -125,6 +159,7 @@ void Llist::Push_End(Node* nPtr)
 
 Node* Llist::Pop_Front(void)
 {
+	Node* out;
 	if (_headNode == NULL)
 	{
 		//_headNode = nPtr;
@@ -133,12 +168,13 @@ Node* Llist::Pop_Front(void)
 	}
 	else
 	{
+		out = _headNode;
 		//remove the first node from the list,
 		_headNode = _headNode->GetNextNode();
 		_nodeCount--;
 	}
 	//return a pointer to this Node.
-	return _headNode;
+	return out;
 	//do not delete the Node in this function.
 	//Simply unlink and return it from the list.
 }
@@ -146,6 +182,7 @@ Node* Llist::Pop_Front(void)
 
 Node* Llist::Pop_End(void)
 {
+	Node* out;
 	if (_endNode == NULL)
 	{
 		//_headNode = nPtr;
@@ -154,12 +191,14 @@ Node* Llist::Pop_End(void)
 	}
 	else
 	{
+		out = _endNode;
 		//remove the last node from the list,
 		_endNode = _endNode->GetPrevNode();
+		_endNode->SetNextNode(NULL);
 		_nodeCount--;
 		//return a pointer to this Node.
 	}
-	return _endNode;
+	return out;
 }
 
 Node* Llist::FindNode(int int1)
@@ -183,9 +222,12 @@ void Llist::AddNode(Node* node, int int1)
 	if(backPtr != NULL)
 	{
 		//set _prevNode
-		node->SetPrevNode(backPtr->GetPrevNode());
+		Node* prev = backPtr->GetPrevNode();
+		node->SetPrevNode(prev);
 		node->SetNextNode(backPtr);
+
 		backPtr->SetPrevNode(node);
+		prev->SetNextNode(node);
 	}
 	//increment node count
 	_nodeCount++;
@@ -198,12 +240,7 @@ Node* Llist::RemoveNode(int int1)
 	if(nPtr != NULL)
 	{
 		Node* prevNode = nPtr->GetPrevNode();
-		//prevNode->ToString();
 		Node* nextNode = nPtr->GetNextNode();
-		//nextNode->ToString();
-		if (nextNode == NULL) cout << "nextNode == NULL" << endl;
-		if (prevNode == NULL) cout << "prevNode == NULL" << endl;
-		cin.get();
 		prevNode->SetNextNode(nextNode);
 		nextNode->SetPrevNode(prevNode);
 	}
@@ -213,34 +250,51 @@ Node* Llist::RemoveNode(int int1)
 	return nPtr;
 }
 
-void Llist::ClearList(void)
+
+Llist& Llist::operator = (Llist& rho)
 {
-	//clears the list and sets _headNode and _rearNode to NULL.
-	Node* nodePtr = _headNode;
-	Node* nextPtr = _headNode->GetNextNode();
-	while (nextPtr != NULL)
+	if (rho.GetFirst() == NULL)
 	{
-		//free the memory related to the node
-		delete nodePtr;
-		nodePtr = NULL;
-		nodePtr = nextPtr;
-		nextPtr = nodePtr->GetNextNode();
-		_nodeCount--;
+		ClearList();
+		return *this;
 	}
-	_headNode = NULL;
-	_endNode = NULL;
-	_nodeCount = 0;
-}
+	// check to see if this object is equal to the right hand object
+	if (this != &rho)
+	{
+		ClearList();
 
-void Llist::DisplayList(void)
-{
+		Node* oldNode = rho.GetFirst();
+		//clone the old head node
+		_headNode = oldNode->Clone();
+		//get the next old node
+		oldNode = oldNode->GetNextNode();
+		//clone the next old node
+		Node* newNode = oldNode->Clone();
+		//set Next Node for head node
+		_headNode->SetNextNode(newNode);
+		//set prev node for next node to the new _headNode
+		newNode->SetPrevNode(_headNode);
+		//get the pointer to the next node in the old list
+		oldNode = oldNode->GetNextNode();
+		while (oldNode != NULL)
+		{
+			//clone the old Node
+			Node* nextNode = oldNode->Clone();
+			//set the next node of newNode
+			newNode->SetNextNode(nextNode);
+			//set the prev node of nextNode to newNode
+			nextNode->SetPrevNode(newNode);
+			//point newNode to nextNode						//TODO check this
+			newNode = nextNode;
+			//get the pointer to the next node in the old list
+			oldNode = oldNode->GetNextNode();
+		}
+		_endNode = newNode;
+		_nodeCount = rho.GetCount();
+	}
+	//Return a reference to this object.
+	return *this;
 }
-
-/*
-Llist& Llist::operator = (Llist&)
-{
-}
-*/
 
 string Llist::ToString()
 {
@@ -254,6 +308,64 @@ string Llist::ToString()
 		nodePtr = nodePtr->GetNextNode();
 	}
 	return outs.str();
+}
+
+Llist* Llist::Clone()
+{
+	//clone this list object, return a pointer to the clone
+	Node* oldNode = _headNode;
+	//clone the old head node
+	Node* newHead = oldNode->Clone();
+	//get the next old node
+	oldNode = oldNode->GetNextNode();
+	//clone the next old node
+	Node* newNode = oldNode->Clone();
+	//set Next Node for head new head node
+	newHead->SetNextNode(newNode);
+	//set prev node for next node to the new _headNode
+	newNode->SetPrevNode(newHead);
+	//get the pointer to the next node in the old list
+	oldNode = oldNode->GetNextNode();
+	//copy the rest of the list
+	while (oldNode != NULL)
+	{
+		//clone the old Node
+		Node* nextNode = oldNode->Clone();
+		//set the next node of newNode
+		newNode->SetNextNode(nextNode);
+		//set the prev node of nextNode to newNode
+		nextNode->SetPrevNode(newNode);
+		//point newNode to nextNode						//TODO check this
+		newNode = nextNode;
+		//get the pointer to the next node in the old list
+		oldNode = oldNode->GetNextNode();
+	}
+	Node* newEnd = newNode;
+
+	Llist* newList = new Llist(_nodeCount);
+	newList->SetFirst(newHead);
+	newList->SetLast(newEnd);
+	//Return a reference to the new Llist
+	return newList;
+}
+
+
+void Llist::ClearList(void)
+{
+	//clears the list and sets _headNode and _rearNode to NULL.
+	Node* current = _headNode;
+	Node* temp;
+	int i = 0;
+	while (current != NULL)
+	{
+		temp = current;
+		//cout << i++ << " " << current << " " << typeid(current).name() << endl;
+		current = current->GetNextNode();
+		delete temp;
+	}
+	_headNode = NULL;
+	_endNode = NULL;
+	_nodeCount = 0;
 }
 
 //-----------------------------------------End Llist implementation-------------------------------------------

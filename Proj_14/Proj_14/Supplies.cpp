@@ -27,23 +27,23 @@ Supplies::Supplies(): Node()
 	_quantity = 0;
 	_reorderQuantity = 0;
 	string classname = typeid(*this).name();
-	cout << classname << DEFAULT_CONSTRUCTOR << endl;
+	//cout << classname << DEFAULT_CONSTRUCTOR << endl;
 }
 
-Supplies::Supplies(int quantity, string measure, string name, int number, int reQuantity) : Node(number)
+Supplies::Supplies(int quantity, string measure, string name, int reQuantity, int number) : Node(number)
 {
 	_supplyName = name;
 	_supplyUnitMeasure = measure;
 	_quantity = quantity;
 	_reorderQuantity = reQuantity;
 	string classname = typeid(*this).name();
-	cout << classname << CONSTRUCTOR << endl;
+	//cout << classname << CONSTRUCTOR << endl;
 }
 
 Supplies::~Supplies()
 {
 	string classname = typeid(*this).name();
-	cout << classname << DESTRUCTOR << endl;
+	//cout << classname << DESTRUCTOR << endl;
 }
 
 unsigned int Supplies::GetQuantity() const
@@ -117,4 +117,10 @@ void Supplies::Copy(Supplies& supplies)
 	_quantity = supplies._quantity;
 	_reorderQuantity = supplies._reorderQuantity;
 	Node::Copy(supplies);
+}
+
+Node* Supplies::Clone()
+{
+	Supplies* newNode = new Supplies(_quantity, _supplyUnitMeasure, _supplyName, _reorderQuantity , Node::GetNumber());
+	return newNode;
 }

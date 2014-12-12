@@ -21,10 +21,6 @@
 // CS 1410
 // Date last modified: December 5, 2013
 // ----------------- .h file contents ----------------------
-//#include <iostream>
-//#include <string>
-//#include <sstream>
-//using namespace std;
 
 // the PrintList function
 // Purpose: Prints out the contents for each Node in the List
@@ -65,7 +61,7 @@ void ProjTestGrocery()
 	Node* _tempNode = groceries.RemoveNode(2);
 	cout << "Removed Node -> " << _tempNode->ToString() << endl;
 	PrintNode(_tempNode);
-	//delete _tempNode;
+	delete _tempNode;
 	cout << "\nThe original nodes in the List:\n";
 	PrintList(groceries);
 	cout << "\n----------------------------------\n";
@@ -78,6 +74,7 @@ void ProjTestGrocery()
 
 	PrintList(groceries);
 	cout << "\n----------------------------------\n";
+
 	// test pop-front
 	cout << "\nRemoving the first node from the list.\n";
 	cout << "\n----------------------------------\n";
@@ -148,7 +145,7 @@ void ProjTestGrocery()
 	cout << "\n-------------------------------------------\n";
 	cout << "\nEnd of Test";
 	cout << "\n-------------------------------------------\n";
-	//supply.ClearList(); TODO Had to fix this in order for it to work! note this.
+	//supply.ClearList(); Error in provided driver code
 	hardware.ClearList();
 	system("PAUSE");
 }
@@ -255,6 +252,8 @@ void ProjTestSupplies()
 	system("PAUSE");
 	//return 0;
 }
+
+
 void PrintList(Llist& lst)
 {
 	cout <<  lst.ToString();
@@ -271,13 +270,9 @@ void PrintNode(Node* nPtr)
 	cout << nPtr->ToString();
 }
 
-
-
 int main()
 {
 	ProjTestGrocery();
 	ProjTestSupplies();
-	cout << endl;
-	system("PAUSE");
 	return 0;
 }

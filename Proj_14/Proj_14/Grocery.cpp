@@ -26,7 +26,7 @@ Grocery::Grocery(): Node()
 	_itemUnitMeasure = "";
 	_numberUnits = 0;
 	string classname = typeid(*this).name();
-	cout << classname << DEFAULT_CONSTRUCTOR << endl;
+	//cout << classname << DEFAULT_CONSTRUCTOR << endl;
 }
 
 Grocery::Grocery( int numUnits, string unitMeasure, string name, int number) : Node(number)
@@ -35,7 +35,7 @@ Grocery::Grocery( int numUnits, string unitMeasure, string name, int number) : N
 	_itemUnitMeasure = unitMeasure;
 	_numberUnits = numUnits;
 	string classname = typeid(*this).name();
-	cout << classname << CONSTRUCTOR << endl;
+	//cout << classname << CONSTRUCTOR << endl;
 }
 
 Grocery::~Grocery()
@@ -43,7 +43,7 @@ Grocery::~Grocery()
 	//free up all the dynamically allocated memory.
 	//Free();
 	string classname = typeid(*this).name();
-	cout << classname << DESTRUCTOR << endl;
+	//cout << classname << DESTRUCTOR << endl;
 }
 
 string& Grocery::GetName()
@@ -106,3 +106,10 @@ void Grocery::Copy(Grocery& grocery)
 	_numberUnits = grocery._numberUnits;
 	Node::Copy(grocery);
 }
+
+Node* Grocery::Clone()
+{
+	Grocery* newNode = new Grocery(_numberUnits, _itemUnitMeasure, _itemName, Node::GetNumber());
+	return newNode;
+}
+

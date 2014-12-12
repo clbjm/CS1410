@@ -119,6 +119,12 @@ class Supplies: public Node
 		///---------------------------End--------------------------------------------------
 		void Copy(Supplies&);
 
+		///----------------- Clone function -----------------------
+		/// Purpose: Clone node object
+		/// Returns: Copied node object
+		///-------------------------- End ------------------------------
+		Node* Clone();
+
 };
 
 #endif /* SUPPLIES_H_ */

@@ -58,7 +58,6 @@ class Node
 		///-------------------------- End ------------------------------
 		virtual ~Node();
 
-
 		///-------------------- Getter Function---------------------
 		/// Purpose: To get the pointer to this object
 		/// Returns: pointer to this Node object
@@ -111,6 +110,13 @@ class Node
 		///---------------------------End-------------------------------
 		void SetNumber(int number);
 
+		///--------------------assignment operator overloading Function--------------------
+		/// Purpose: overloads the assignment operator
+		/// Parameters: reference to a node object
+		/// Returns: reference to a node object
+		///---------------------------End--------------------------------------------------
+		Node& operator = (Node&);
+
 		///-------------------- ToString pure virtual function---------------------
 		/// Purpose: Pure virtual function
 		/// Parameters: none
@@ -124,6 +130,12 @@ class Node
 		/// Returns: none
 		///---------------------------End--------------------------------------------------
 		virtual void Copy(Node&);
+
+		///----------------- Clone pure virtual function -----------------------
+		/// Purpose: Clone node object
+		/// Returns: Copied node object
+		///-------------------------- End ------------------------------
+		virtual Node* Clone() = 0;
 
 		///--------------------Free Function-------------------------------------------------
 		/// Purpose: Frees (Deletes the pointers) the memory associated with the object
@@ -211,6 +223,33 @@ class Llist
 		///---------------------------End-------------------------------
 		Node* GetLast(void);
 
+		//-------------------- Setter Function---------------------
+		/// Purpose: To set the last node in the list
+		/// Parameters: Node pointer to last node
+		/// Returns: none
+		///---------------------------End-------------------------------
+		void SetLast(Node* endNode);
+
+		//-------------------- Setter Function---------------------
+		/// Purpose: To set the first node in the list
+		/// Parameters: Node pointer to first node
+		/// Returns: none
+		///---------------------------End-------------------------------
+		void SetFirst(Node* headNode);
+
+		//-------------------- Getter Function---------------------
+		/// Purpose: To get the node count
+		/// Returns: int node count
+		///---------------------------End-------------------------------
+		unsigned int GetCount(void);
+
+		//-------------------- Setter Function---------------------
+		/// Purpose: To set the node count
+		/// Parameters: unsigned int count
+		/// Returns: none
+		///---------------------------End-------------------------------
+		void SetCount(unsigned int nodeCount);
+
 		///-------------------- FindNode Function-------------------------------------------------
 		/// Purpose: finds a Node with its number as a parameter
 		/// Parameters: int number of the node
@@ -232,30 +271,12 @@ class Llist
 		///---------------------------End--------------------------------------------------
 		Node* RemoveNode(int);
 
-		///--------------------DisplayList Function-------------------------------------------------
-		/// Purpose: Display the list for the user
-		/// Parameters: none
-		/// Returns: none
-		///---------------------------End--------------------------------------------------
-		void DisplayList(void);
 		///--------------------assignment operator overloading Function--------------------
 		/// Purpose: overloads the assignment operator
 		/// Parameters: reference to a list object
 		/// Returns: reference to a list object
 		///---------------------------End--------------------------------------------------
-		//Llist& operator = (Llist&);
-		///--------------------assignment operator overloading Function Function-------------
-		/// Purpose: overloads the assignment operator
-		/// Parameters: pointer to a list object
-		/// Returns: pointer to a list object
-		///---------------------------End--------------------------------------------------
-		//Llist* operator = (Llist*);
-		///--------------------ClearList Function-------------------------------------------------
-		/// Purpose: clears the list and sets _headNode and _rearNode to NULL.
-		/// Parameters: none
-		/// Returns: none
-		///---------------------------End--------------------------------------------------
-		void ClearList(void);
+		Llist& operator = (Llist&);
 
 		///-------------------- ToString function---------------------
 		/// Purpose: returns the values of all member data of the Llist as a string
@@ -263,6 +284,20 @@ class Llist
 		/// Returns: all member data as a string
 		///---------------------------End-------------------------------
 		string ToString();
+
+		///----------------- Clone function -----------------------
+		/// Purpose: Clone list object
+		/// Returns: Copied list object
+		///-------------------------- End ------------------------------
+		Llist* Clone();
+
+		///--------------------ClearList Function-------------------------------------------------
+		/// Purpose: clears the list and sets _headNode and _rearNode to NULL.
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void ClearList(void);
+
 };
 
 

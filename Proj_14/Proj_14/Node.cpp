@@ -31,12 +31,19 @@ Node::Node()
 	_prevNode = NULL;
 	_number = 0;
 	string classname = typeid(*this).name();
-	cout << classname << DEFAULT_CONSTRUCTOR << endl;
+	//cout << classname << DEFAULT_CONSTRUCTOR << endl;
 }
 
-Node::Node(Node&)
+Node::Node(Node& node)
 {
-	//Copy constructor
+	if (&node == NULL)
+	{
+		return;
+	}
+	//copy everything from that node to this one
+	this->Copy(node);
+	string classname = typeid(*this).name();
+	cout << classname << COPY_CONSTRUCTOR << endl;
 }
 
 Node::Node(int number)
@@ -45,13 +52,13 @@ Node::Node(int number)
 	_prevNode = NULL;
 	_number = number;
 	string classname = typeid(*this).name();
-	cout << classname << CONSTRUCTOR << endl;
+	//cout << classname << CONSTRUCTOR << endl;
 }
 
 Node::~Node()
 {
 	string classname = typeid(*this).name();
-	cout << classname << DESTRUCTOR << endl;
+	//cout << classname << DESTRUCTOR << endl;
 }
 
 Node* Node::GetNextNode() const
@@ -86,9 +93,28 @@ void Node::SetNumber(int number)
 
 void Node::Copy(Node& node)
 {
-	_nextNode = node._nextNode;
-	_prevNode = node._prevNode;
-	_number = node._number;
+	_nextNode = node.GetNextNode();
+	_prevNode = node.GetPrevNode();
+	_number = node.GetNumber();
+}
+
+Node& Node::operator = (Node& node)
+{
+	if (&node == NULL)
+	{
+		return *this;
+	}
+	// check to see if this object is equal to the right hand object
+	if (this != &node)
+	{
+		Node* newNode = node.Clone();
+		newNode->SetNextNode(node.GetNextNode());
+		newNode->SetPrevNode(node.GetPrevNode());
+		newNode->SetNumber(node.GetNumber());
+		return *newNode;
+	}
+	//Return a reference to this object.
+	return *this;
 }
 
 //-----------------------------------------End Node implementation-------------------------------------------

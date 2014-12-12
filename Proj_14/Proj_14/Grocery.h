@@ -110,6 +110,11 @@ class Grocery: public Node
 		///---------------------------End--------------------------------------------------
 		void Copy(Grocery&);
 
+		///----------------- Clone function -----------------------
+		/// Purpose: Clone node object
+		/// Returns: Copied node object
+		///-------------------------- End ------------------------------
+		Node* Clone();
 };
 
 #endif /* GROCERY_H_ */
