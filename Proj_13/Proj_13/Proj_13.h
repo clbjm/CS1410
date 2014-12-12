@@ -1,12 +1,12 @@
 //============================================================================
 // Project Prolog
-// Name:		Proj_09.h
+// Name:		Proj_13.h
 // Purpose:		Test Employee Inheritance
 // Version:		1.0
 // Author:		Kevin S. O'Day
 // Course:		CS 1410 Section 002
 // Instructor:	Dennis Fairclough
-// Project:		Proj_09
+// Project:		Proj_13
 // Date:		November 2014
 // Date:		11/26/14 9:59 AM
 //============================================================================
@@ -28,6 +28,7 @@
 #include "Utils.h"
 #include "FileIO.h"
 #include "Employee.h"
+#include "MyVector.h"
 
 ///--------------------TestEmployee Driver Function---------------------
 /// Purpose: test the employee class & methods
@@ -57,4 +58,4 @@ void MenuThree(FileIO*);
 /// Purpose: Prints paychecks
 /// Returns void
 ///---------------------------End---------------------------------------
-void MenuFour(FileIO*, vector<Employee*>&);
+void MenuFour(FileIO*, MyVector<Employee*>*);

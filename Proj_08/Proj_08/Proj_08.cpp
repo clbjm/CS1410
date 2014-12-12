@@ -14,7 +14,7 @@
 // source code from any other source constitutes cheating, and that I will
 // receive a zero grade on this project if I am found in violation of
 // this policy.
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 #include "Proj_08.h"
 
@@ -23,38 +23,39 @@ const double STATE_RATE = 0.075;
 const double WORK_WEEK = 40.0;
 const double OVERTIME_RATE = 1.5;
 
-enum OPTIONS{ WRITE_FILE = 1, READ_FILE = 2, EXIT = 3 };
-enum ORDER{ EMP_NUM = 0, NAME = 1, ADDRESS = 2, PHN_NUM = 3, HOURS = 4, WAGE = 5 };
-
-const int EMPLOYEE_NUMBERS[] =			{ 1, 2, 3, 4};
-const string EMPLOYEE_NAMES[] =			{ "H. Potter", "A. Dumbledore", "R. Weasley", "R. Hagrid" };
-const string EMPLOYEE_ADDRESSES[] =		{ "Privet Drive", "Hogewarts", "The Burrow", "Hogwarts" };
-const string EMPLOYEE_PHONE_NUMBERS[] = { "201-9090", "803-1230", "892-2000", "910-8765" };
-const double EMPLOYEE_HOURS[] =			{ 40.0, 0, 40.0, 0};
-const double EMPLOYEE_WAGES[] =			{ 12.00, 1200.00, 10.00, 1000 };
-
-
-const string CHECK_TITLE = "---------------------FluffShuffle Electronics------------------------";
-const string PAY_TO = "Pay to the order of ";
-const string AMOUNT_SPACE = "...........$";
-const string BANK_NAME = "United Bank of East Orem";
-const string CHECK_LINE = "----------------------------------------------------------------------";
-const string HOURS_WORKED = "Hours Worked: ";
-const string HOURLY_WAGE = "Hourly Wage:  ";
-
-const char COMMA_DELIMITER = ',';
-
+enum OPTIONS{ CREATE = 'C', OPEN = 'O', SAVE = 'S', RESTORE = 'R', SEEK = 'E', PRINT = 'P', EXIT = 'Q' };
+enum SEEK_MODE{BEGINNING = 0, END = 1};
 const string FILE_CREATION_DONE_MSG = "File creation is complete.";
-const string INVALID_NUMBER_MSG = "The number you entered was invalid.\n";
+const string FILE_OPEN_DONE_MSG = "File opening is complete.";
 
-const string INSTRUCTION_MSG =	"This program has 3 options: \n"
-								"Enter '1' to create a data file, or \n"
-								"Enter '2' to read data from a file and print checks, or \n"
-								"Enter '3' to exit program: ";
-const string INVALID_INPUT_MSG = "You entered an invalid number, try again.";
-const string FILE_CREATION_MSG = "The file has been created.";
-const string EXIT_MSG = "Exiting...";
-const string REPEAT_INPUT_MSG = "Please try again.";
+const string INSTRUCTION_MSG =	"Select one of the following menu items \n\n"
+								"C)reate a new database file. \n"
+								"O)pen an existing database file. \n"
+								"Q)uit program. \n\n"
+								"Selected menu item: ";
+
+const string INSTRUCTION_MSG2 = "Select one of the following menu items \n\n"
+								"S)ave database. \n"
+								"R)estore database. \n"
+								"Q)uit program. \n\n"
+								"Selected menu item: ";
+
+const string INSTRUCTION_MSG3 = "Select one of the following menu items \n\n"
+								"sE)ek to the beginning of the database. \n"
+								"Q)uit program. \n\n"
+								"Selected menu item: ";
+
+const string INSTRUCTION_MSG4 = "Select one of the following menu items \n\n"
+								"P)rint employee paychecks. \n"
+								"Q)uit program. \n\n"
+								"Selected menu item: ";
+
+const string INVALID_INPUT_MSG = "\nYou entered an invalid character, try again.";
+const string INVALID_FILE_DATA_MSG = "\nunexpected data in file, program is terminating...";
+const string FILE_CREATION_MSG = "\nThe file has been created.";
+const string FILE_SEEK_DONE_MSG = "\nThe pointer is returned to the start of the file.";
+const string EXIT_MSG = "\nExiting...";
+const string PRINT_FINISH_MSG = "\nFinished printing checks, restarting...";
 
 // The main method
 // Purpose: Entry point to the program
@@ -62,6 +63,7 @@ const string REPEAT_INPUT_MSG = "Please try again.";
 // Returns: 0
 int main()
 {
+
 	TestEmployee();
 	//Pause
 	Pause();
@@ -69,81 +71,293 @@ int main()
 }//End main()
 
 
-bool TestEmployee()
+void TestEmployee()
 {
-	int choice = 0;
 	bool valid = false;
-	system("CLS");
+	//system("CLS");
+	FileIO* fileIO = new FileIO();
+	MenuOne(fileIO);
+
+
+}//end TestEmployee()
+
+void MenuOne(FileIO* fileIO)
+{
+	int choice;
 	do
 	{
-		try
+		system("CLS");
+		cin.clear();
+		//Prompt the user to enter a character.
+		choice = GetInputChar(INSTRUCTION_MSG);
+		switch (choice)
 		{
-			//Presents the user with a menu of three choices : 
-			//1. Create a data file, 
-			//2. Read data from a file and print checks and 
-			//3. Exit program.
-			choice = GetInputInt(INSTRUCTION_MSG);
-			valid = true;
-		}
-		catch (IOException& e)
-		{
-			cout << e.GetMessage() << endl;
-			cout << REPEAT_INPUT_MSG << endl << endl;
-		}
-	} while (!valid);
-
-
-	switch (choice)
-	{
-		case WRITE_FILE:
+			case CREATE:
 			{
-				//Option 1, Create 4 employee objects
-				HourlyEmployee h1(EMPLOYEE_NUMBERS[0], EMPLOYEE_NAMES[0], EMPLOYEE_ADDRESSES[0],
-					EMPLOYEE_PHONE_NUMBERS[0], EMPLOYEE_HOURS[0], EMPLOYEE_WAGES[0]);
-				HourlyEmployee h2(EMPLOYEE_NUMBERS[2], EMPLOYEE_NAMES[2], EMPLOYEE_ADDRESSES[2],
-					EMPLOYEE_PHONE_NUMBERS[2], EMPLOYEE_HOURS[2], EMPLOYEE_WAGES[2]);
+				// get a filename from the user
+				string filename = GetInputFileName();
+				//If file exists it opens and truncates it, else creates new file
+				try
+				{
+					bool status = fileIO->OpenDB(filename, 1);
+					// Print an message that the file creation is complete.
+					cout << FILE_CREATION_DONE_MSG << endl << endl;
+				}
+				catch (FileException& e)
+				{
+					cout << e.GetMessage() << endl;
+				}
+			}
+				//display the second menu
+				MenuTwo(fileIO);
+				cout << EXIT_MSG << endl << endl;
+				Pause();
+				break;
+			case OPEN:
+			{
+				// If the user selects the second option, your program should
+				// get a filename from the user
+				string filename = GetInputFileName();
+				//try to open the file
+				try
+				{
+					//Open an existing file
+					fileIO->OpenDB(filename, 0);
+					//Position the file pointer at the front of the file
+					fileIO->SeekDB(BEGINNING);
+					// Print an message that the file is open
+					cout << FILE_OPEN_DONE_MSG << endl << endl;
+				}
+				catch (FileException& e)
+				{
+					cout << e.GetMessage() << endl;
+				}
+			}
+				//display the second menu
+				MenuTwo(fileIO);
+				break;
+			case EXIT:
+				//close the open database.
+				fileIO->CloseDB();
+				//delete the FileIO object
+				delete fileIO;
+				fileIO = NULL;
+				//print exit message
+				cout << EXIT_MSG << endl << endl;
+				Pause();
+				//exit the program
+				exit(0);
+				break;
+			default:
+				//print error message
+				cout << INVALID_INPUT_MSG << endl << endl;
+				Pause();
+				// start over
+				break;
+		}
+	} while (true);
+}
 
-				SalaryEmployee s1(EMPLOYEE_NUMBERS[1], EMPLOYEE_NAMES[1], EMPLOYEE_ADDRESSES[1],
-					EMPLOYEE_PHONE_NUMBERS[1], EMPLOYEE_WAGES[1]);
-				SalaryEmployee s2(EMPLOYEE_NUMBERS[3], EMPLOYEE_NAMES[3], EMPLOYEE_ADDRESSES[3],
-					EMPLOYEE_PHONE_NUMBERS[3], EMPLOYEE_WAGES[3]);
+void MenuTwo(FileIO* fileIO)
+{
+	bool valid = false;
+	int choice;
+	do
+	{
+		system("CLS");
+		cin.clear();
+		//Prompt the user to enter a character.
+		choice = GetInputChar(INSTRUCTION_MSG2);
+		switch (choice)
+		{
+			case SAVE:
+			{
+				//
+				Employee* h1 = new Hourly(1, "Harry Potter", "Privet Drive", "304-201-9090", 40.00, 12.00);
+				Employee* s1 = new Salary(2, "Albert Dumbledore", "Hogewarts", "404-803-1230", 1200.50);
+				Employee* sa1 = new Sales(4, "Rotten Hagrid", "Hogwarts", "505-910-8765", 1000, 0.09, 100000.00);
+				Employee* h2 = new Hourly(3, "Rogue Weasley", "The Burrow", "304-892-2000", 45.50, 10.00);
+				Employee* s2 = new Salary(4, "Rotten Hagrid", "Hogwarts", "601-910-8765", 1000.00);
+				Employee* h3 = new Hourly(1, "Doc Dwarf", "Tree Root Drive", "505-301-9090", 40.00, 14.00);
+				Employee* sa2 = new Sales(4, "Sleepy Dwarf", "Hogwarts", "505-910-8765", 1500.00, 0.07, 150000.00);
+				Employee* s3 = new Salary(2, "Happy Dwarf", "Hogewarts", "505-803-1230", 1200);
+				Employee* h4 = new Hourly(3, "Grumpy Dwarf", "Tree Limb Drive", "505-892-2000", 50.75, 10.00);
+				//Sales sa3(4, "Dopey Dwarf", "Hogwarts", "910-8765", 1000); //these parameters don't match the type
 
-				//Get a filename from the user, open the file, repeat if invalid.
-				ofstream outFile = GetValidWriteFile();
+				//Create a vector for employee pointers and add all the employees to it
+				vector<Employee*> employeeDB;
+				employeeDB.push_back(h1);
+				employeeDB.push_back(s1);
+				employeeDB.push_back(sa1);
+				employeeDB.push_back(h2);
+				employeeDB.push_back(s2);
+				employeeDB.push_back(h3);
+				employeeDB.push_back(sa2);
+				employeeDB.push_back(s3);
+				employeeDB.push_back(h4);
 
-				// Send messages to each of the four Employee objects to write themselves out to the file.
-				h1.WriteData(outFile);
-				h2.WriteData(outFile);
-				s1.WriteData(outFile);
-				s2.WriteData(outFile);
-
-				// Close the file.
-				outFile.close();
+				//The four Hourly, three Salary and two Sales employee objects listed above will be written to the file
+				try
+				{
+					for (unsigned int i = 0; i < employeeDB.size(); i++)
+					{
+						fileIO->WriteDB(employeeDB[i]);
+					}
+					//the file pointer will be moved to the front of the file.
+					//Position the file pointer at the front of the file
+					fileIO->SeekDB(BEGINNING);
+				}
+				catch (FileException& e)
+				{
+					cout << e.GetMessage() << endl;
+				}
 				// Print an message that the file creation is complete.
 				cout << FILE_CREATION_DONE_MSG << endl << endl;
 			}
-			break;
-		case READ_FILE:
+				MenuThree(fileIO);
+				valid = true;
+				break;
+			case RESTORE:
 			{
 				// If the user selects the second option, your program should
-				// Create four new Employee objects, using the default Employee constructor.
-				HourlyEmployee h1;
-				HourlyEmployee h2;
-				SalaryEmployee s1;
-				SalaryEmployee s2;
-
-				//Ask the user for a filename, return a corresponding file
-				ifstream inFile = GetValidReadFile();
-
-				//read data from the file into the objects
-				//check for errors in the file
+				//create a vector of employee pointers
+				vector<Employee*> employeeDB;
+				// the file should already be open
 				try
 				{
+					//restore the objects from the file
+					//Position the file pointer at the front of the file
+					//fileIO->SeekDB(BEGINNING);
+
+					string type;
+					int count = 0;
 					// Have each object read itself in from the file.
-					h1.ReadData(inFile);
-					h2.ReadData(inFile);
-					s1.ReadData(inFile);
-					s2.ReadData(inFile);
+					bool more = true;
+					do
+					{
+						Employee* ePtr = NULL;
+						more = fileIO->ReadDB(ePtr);
+						//add the employee pointer to the vector
+						if (more) employeeDB.push_back(ePtr);
+					} while (more);
+				}
+				catch (FileException& e)
+				{
+					cout << e.GetMessage() << endl;
+				}
+				//option to print database
+				MenuFour(fileIO, employeeDB);
+			}
+				valid = true;
+				break;
+			case EXIT:
+				//close the open database.
+				fileIO->CloseDB();
+				//delete the FileIO object
+				delete fileIO;
+				fileIO = NULL;
+				//print exit message
+				cout << EXIT_MSG << endl << endl;
+				exit(0);
+				break;
+			default:
+				//print error message
+				cout << INVALID_INPUT_MSG << endl << endl;
+				Pause();
+				// start over
+				valid = false;
+				break;
+		}
+	} while (!valid);
+}
+
+void MenuThree(FileIO* fileIO)
+{
+	bool valid = false;
+	int choice;
+	do
+	{
+		system("CLS");
+		cin.clear();
+		//Prompt the user to enter a character.
+		choice = GetInputChar(INSTRUCTION_MSG3);
+		switch (choice)
+		{
+			case SEEK:
+			{
+				//“Will seek the proper file pointer in the open file.”
+				try
+				{
+					//Position the file pointer at the front of the file
+					fileIO->SeekDB(BEGINNING);
+					cout << FILE_SEEK_DONE_MSG << endl << endl;
+				}
+				catch (FileException& e)
+				{
+					cout << e.GetMessage() << endl;
+				}
+			}
+				valid = true;
+				break;
+			case EXIT:
+				//close the open database.
+				fileIO->CloseDB();
+				//delete the FileIO object
+				delete fileIO;
+				fileIO = NULL;
+				//print exit message
+				cout << EXIT_MSG << endl << endl;
+				Pause();
+				//exit the program
+				exit(0);
+				break;
+			default:
+				//print error message
+				cout << INVALID_INPUT_MSG << endl << endl;
+				Pause();
+				// start over
+				valid = false;
+				break;
+		}
+	} while (!valid);
+}
+
+void MenuFour(FileIO* fileIO, vector<Employee*>& employeeDB)
+{
+	bool valid = false;
+	int choice;
+	do
+	{
+		system("CLS");
+		cin.clear();
+		//Prompt the user to enter a character.
+		choice = GetInputChar(INSTRUCTION_MSG4);
+		cout << (char)choice << endl;
+		switch (choice)
+		{
+			case PRINT:
+			{
+				//Print employee checks
+				try
+				{
+					// If the user selects the print option, your program should
+					//Position the file pointer at the front of the file
+					// Call the PrintCheck() function for each of the new objects.
+					for (unsigned int i = 0; i < employeeDB.size(); i++)
+					{
+						system("CLS");
+						Employee* ePtr = employeeDB[i];
+						ePtr->PrintCheck();
+						//Pause
+						Pause();
+					}
+
+					// delete the objects and clear the array
+					for (unsigned int i = 0; i < employeeDB.size(); i++)
+					{
+						delete employeeDB[i];
+						employeeDB[i] = NULL;
+					}
 				}
 				catch (FileException& e)
 				{
@@ -154,38 +368,31 @@ bool TestEmployee()
 					// terminate the program
 					exit(0);
 				}
-
-				// Call the PrintCheck() function for each of the three new objects, just as you did in the previous project.
-				system("CLS");
-				h1.PrintCheck();
-				//Pause
-				Pause();
-				system("CLS");
-				s1.PrintCheck();
-				//Pause
-				Pause();
-				system("CLS");
-				h2.PrintCheck();
-				//Pause
-				Pause();
-				system("CLS");
-				s2.PrintCheck();
-
-				//close the file
-				inFile.close();
+				//TODO return to the main menu when finished
 			}
-			break;
-		case EXIT:
-			//print exit message
-			cout << EXIT_MSG << endl << endl;
-			break;
-		default:
-			//print error message
-			cout << INVALID_NUMBER_MSG << endl << endl;
-			Pause();
-			// start over
-			return false;
-			break;
-	}
-	return true;
-}//end TestEmployee()
+				valid = true;
+				cout << PRINT_FINISH_MSG << endl << endl;
+				Pause();
+				break;
+			case EXIT:
+				//close the open database.
+				fileIO->CloseDB();
+				//delete the FileIO object
+				delete fileIO;
+				fileIO = NULL;
+				//print exit message
+				cout << EXIT_MSG << endl << endl;
+				Pause();
+				//exit the program
+				exit(0);
+				break;
+			default:
+				//print error message
+				cout << INVALID_INPUT_MSG << endl << endl;
+				Pause();
+				// start over
+				valid = false;
+				break;
+		}
+	} while (!valid);
+}

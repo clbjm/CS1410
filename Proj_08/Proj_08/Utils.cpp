@@ -37,7 +37,7 @@ const string RETRY_MSG = ", try again.";
 const string PAUSE_MSG = "Press [ Enter ] to continue...";
 const string EXIT_MSG = "Exit requested, closing the program.";
 
-const string FILE_NAME_PROMPT = "Please enter a valid file name.";
+const string FILE_NAME_PROMPT = "\nPlease enter a valid file name: ";
 const string FILE_INSTRUCTION_PROMPT = "Enter '1' to create a data file \n"
 "Enter '2' to read data from a file and print checks \n"
 "Enter '3' to exit program.\n";
@@ -73,6 +73,36 @@ int GetInputInt(string prompt)
 
 	} while (!validInput);//end while loop if the input is valid
 	return number;
+} // End GetInputInt(string prompt)
+
+
+int GetInputChar(string prompt)
+{
+	string temp = "";
+	int character = 0;
+	bool validInput = false;
+	do
+	{
+		cin.clear();
+		//Prompt the user to enter a value.
+		cout << prompt;
+		//place the value in string temp
+		getline(cin, temp);
+
+		try
+		{
+			character = StringToValidChar(temp);
+			validInput = true;
+		}
+		catch (IOException& e)
+		{
+			//if there is an exception, print the error and repeat the prompt
+			cout << e.GetMessage() << RETRY_MSG << endl;
+			validInput = false;
+		}
+
+	} while (!validInput);//end while loop if the input is valid
+	return character;
 } // End GetInputInt(string prompt)
 
 
@@ -117,6 +147,46 @@ int StringToValidInt(string& numStr)
 	//return as integer
 	number = atoi(numStr.c_str());
 	return number;
+}
+
+
+int StringToValidChar(string& chrStr)
+{
+	int character = 0;
+	//if the string is empty,
+	if (chrStr.empty()){
+		string error = EMPTY_STRING_MSG;
+		throw IOException(error, 0);
+	}
+	//check to see if CTRL-Z has been pressed
+	else if (cin.eof())
+	{
+		string error = EOF_MSG;
+		throw IOException(error, 0);
+	}
+	// Decimal point, '+' or '-' or any digit are all valid first characters
+	else if (isalpha(chrStr[0]))
+	{
+		//check all the characters after the first for validity
+		if (chrStr.length() > 1)
+		{
+			//input is invalid
+			string error = INVALID_INPUT_MSG;
+			throw IOException(error, 0);
+		}
+		character = chrStr[0];
+	}
+	else
+	{
+		//input is invalid
+		string error = INVALID_INPUT_MSG;
+		throw IOException(error, 0);
+	}
+
+	//convert the validated numStr string to integer
+	//return as integer
+	//character = atoi(chrStr.c_str());
+	return character;
 }
 
 
@@ -252,18 +322,16 @@ void SplitString(string& str, char delimiter, vector<string>& cells)
 }
 
 
-string GetInputFileName(string prompt)
+string GetInputFileName()
 {
-	//disallow \ / < > | " : ? *
+	//TODO disallow \ / < > | " : ? *
 	string temp = "";
 	cin.clear();
 	//Prompt the user to enter a value.
-	cout << prompt << endl;
+	cout << FILE_NAME_PROMPT;
 	//place the value in string temp
 	getline(cin, temp);
-
 	//TODO validate the file name
-
 	return temp;
 }
 
@@ -274,7 +342,7 @@ ifstream GetValidReadFile()
 	do
 	{
 		// get a file name from the user 
-		string fileName = GetInputFileName(FILE_NAME_PROMPT);
+		string fileName = GetInputFileName();
 		//open the file
 		file.open(fileName.c_str());
 		//test the state of the stream to verify that the file name is valid
@@ -303,7 +371,7 @@ ofstream GetValidWriteFile()
 	do
 	{
 		// get a file name from the user 
-		string fileName = GetInputFileName(FILE_NAME_PROMPT);
+		string fileName = GetInputFileName();
 		//open the file
 		file.open(fileName.c_str());
 		//test the state of the stream to verify that the file name is valid

@@ -5,7 +5,7 @@
 // Author:		Kevin S. O'Day
 // Course:		CS 1410 Section 002
 // Instructor:	Dennis Fairclough
-// Project:		Proj_09
+// Project:		Proj_11
 // Date:		November 2014
 // Date:		11/26/14 9:59 AM
 //============================================================================
@@ -15,7 +15,7 @@
 // source code from any other source constitutes cheating, and that I will
 // receive a zero grade on this project if I am found in violation of
 // this policy.
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 #include "Utils.h"
 

@@ -2,12 +2,11 @@
 // File Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
-// Project: Proj_13
+// Project: Lab_15
 // Purpose: Templatized vector
 // Date: December 2014 
 // Date: 12/09/14 9:59 AM
 //============================================================================
-
 // I declare that the following source code was written by me, or provided
 // by the instructor for this project. I understand that copying 
 // source code from any other source constitutes cheating, and that I will
@@ -30,26 +29,25 @@ int main()
 	// push some values into the vector
 	for (int i = 0; i < MAX; i++)
 	{
-		vectD.push_back(START + i);
+		vectD.Push_Back(START + i);
 	}
 
 	// remove the last element
-	vectD.pop_back();
+	vectD.Pop_Back();
 
 	// add another value
-	vectD.push_back('Z');
+	vectD.Push_Back('Z');
 
 	// test memory management
 	MyVector<char> vectD2 = vectD;
 	// display the contents
 	cout << "\n[";
-	for (int i = 0; i < vectD2.size() - 1; i++)
+	for (int i = 0; i < vectD2.Size() - 1; i++)
 	{
 		cout << vectD2[i] << ", ";
 	}
 
-	cout << "..., " << vectD2.last() << "]\n";
-
+	cout << "..., " << vectD2.Last() << "]\n";
 
 	system("PAUSE");
 

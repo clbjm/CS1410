@@ -1,12 +1,12 @@
 //============================================================================
 // File Prolog
-// Name:		Lab_10.cpp
+// Name:		Lab_11.cpp
 // Purpose:		Practice recursion
 // Version:		1.0
 // Author:		Kevin S. O'Day
 // Course:		CS 1410 Section 002
 // Instructor:	Dennis Fairclough
-// Project:		Lab_10
+// Project:		Lab_11
 // Date:		November 2014
 // Date:		11/26/14 9:59 AM
 //============================================================================
@@ -18,12 +18,12 @@
 //----------------------------------------------------------------------
 
 
-#include "Lab_10.h"
+#include "Lab_11.h"
 
 const string PROMPT1 = "This program counts the number of ";
-const string PROMPT2 = "'\s in a string of characters.\n Enter a string to count: ";
+const string PROMPT2 = "'\n in a string of characters.\n Enter a string to count: ";
 const string RESULT1 = "The number of ";
-const string RESULT2 = "'\s found in the string is: ";
+const string RESULT2 = "'\n found in the string is: ";
 const char CHARACTER = 'a';
 
 // The main method

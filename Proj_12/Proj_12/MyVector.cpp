@@ -7,7 +7,6 @@
 // Date: December 2014 
 // Date: 12/09/14 9:59 AM
 //============================================================================
-
 // I declare that the following source code was written by me, or provided
 // by the instructor for this project. I understand that copying 
 // source code from any other source constitutes cheating, and that I will
@@ -54,17 +53,17 @@ MyVector::~MyVector()
 	Free();
 }
 
-int MyVector::size() const
+int MyVector::Size() const
 {
 	//returns the size of your vector.
 	return _size;
 }
-int MyVector::capacity() const
+int MyVector::Capacity() const
 {
 	//returns the capacity of the vector.
 	return _capacity;
 }
-void MyVector::clear()
+void MyVector::Clear()
 {
 	//deletes all of the elements from the vector and resets its size to zero and its capacity to two.
 	// Free the memory on the heap
@@ -75,7 +74,7 @@ void MyVector::clear()
 	_size = 0;
 }
 
-void MyVector::push_back(int n)
+void MyVector::Push_Back(int n)
 {
 
 	//check to be sure that there is room in the array for the new value
@@ -109,7 +108,7 @@ void MyVector::push_back(int n)
 	}
 }
 
-int MyVector::at(int n) const
+int MyVector::ValueAt(int n) const
 {
 	//returns the value of the element at position n in the vector. 
 	//If the index n is greater than the size( ) of the vector, 
@@ -169,13 +168,13 @@ MyVector& MyVector::operator = (MyVector& rho)
 
 ostream& operator<<(ostream& out, const MyVector& rho)
 {
-	int capacity = rho.capacity();
+	int capacity = rho.Capacity();
 	out << "capacity = " << capacity << endl;
-	int size = rho.size();
+	int size = rho.Size();
 	out << "size = " << size << endl;
 	for (int i = 0; i < size; i++)
 	{
-		out << "element " << i << " = " << rho.at(i) << endl;
+		out << "element " << i << " = " << rho.ValueAt(i) << endl;
 	}
 	return out;
 }

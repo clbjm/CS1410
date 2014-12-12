@@ -1,5 +1,5 @@
 //============================================================================
-// Name:		Employees.h
+// Name:		Employee.h
 // Purpose:		Employee classes
 // Version:		1.0
 // Author:		Kevin S. O'Day
@@ -17,8 +17,8 @@
 //----------------------------------------------------------------------
 
 // # define guard, prevents multiple inclusion
-#ifndef EMPLOYEES_H_
-#define EMPLOYEES_H_
+#ifndef EMPLOYEE_H_
+#define EMPLOYEE_H_
 
 #include <iostream>
 #include <fstream>
@@ -32,6 +32,8 @@
 
 using namespace std;
 
+enum ORDER{ EMP_NUM = 0, NAME = 1, ADDRESS = 2, PHN_NUM = 3, HOURS = 4, WAGE = 5, SALES = 6, COMMISSION = 7 };
+const string FILE_NOT_OPEN_ERROR_MSG = "Error, File not open.";
 
 ///------------------- Employee class------------------
 /// Purpose: Keep track of employee information & compute pay
@@ -59,6 +61,11 @@ class Employee
 		///				strings for name, address, phone number
 		///-------------------------- End ------------------------------
 		Employee(int, string, string, string);
+
+		///----------------- virtual Destructor -----------------------
+		/// Purpose: Clean up and destroy employee object.
+		///-------------------------- End ------------------------------
+		virtual ~Employee();
 
 		///-------------------- Getter Function -----------------------
 		/// Purpose: To return the employee number
@@ -112,25 +119,27 @@ class Employee
 		///-------------------------- End ------------------------------
 		void SetPhoneNumber(string);
 
-		///--------------------ReadData Function---------------------
+		///--------------------ReadData virtual Function---------------------
 		/// Purpose: read data from a persistence file
+		///	Parameters: reference to an fstream object
 		/// Returns:
 		///---------------------------End-------------------------------
-		virtual void ReadData(ifstream&);
+		virtual void ReadData(fstream&);
 
-		///--------------------WriteData Function---------------------
+		///--------------------WriteData virtual Function---------------------
 		/// Purpose: write data to a persistence file
+		///	Parameters: reference to an fstream object
 		/// Returns:
 		///---------------------------End-------------------------------
-		virtual void WriteData(ofstream&);
+		virtual void WriteData(fstream&);
 
 		///-------------------CalcPay function---------------------------
 		/// Purpose: Pure Virtual function
 		///---------------------------End--------------------------------
 		virtual double CalcPay(void) = 0;
 
-		///--------------------PrintCheck Function---------------------
-		/// Purpose: output the employees name, net pay for pay period, hours worked, and wage.
+		///--------------------PrintCheck  virtual Function---------------------
+		/// Purpose: Print the common parts of the check.
 		/// Parameters: None
 		/// Returns: None
 		///---------------------------End-------------------------------
@@ -138,10 +147,10 @@ class Employee
 };
 
 
-///------------------- HourlyEmployee class------------------
-/// Purpose: Keep track of employee information & compute pay //TODO Fix
+///------------------- Hourly class------------------
+/// Purpose: Keep track of employee information & compute pay
 ///-------------------End---------------------------------
-class HourlyEmployee : public Employee
+class Hourly : public Employee
 {
 	//---------------- variable declarations --------------------
 	private:
@@ -154,7 +163,7 @@ class HourlyEmployee : public Employee
 		/// Purpose: To initialize all data members to their default
 		/// Parameters: None
 		///-------------------------- End ------------------------------
-		HourlyEmployee(void);
+		Hourly(void);
 
 		///----------------- Constructor -----------------------
 		/// Purpose: To create an hourly employee object given its parameters
@@ -162,7 +171,7 @@ class HourlyEmployee : public Employee
 		///				strings for name, address, phone number
 		///				doubles for hours worked & pay rate
 		///-------------------------- End ------------------------------
-		HourlyEmployee(int, string, string, string, double, double);
+		Hourly(int, string, string, string, double, double);
 
 		///-------------------- Getter Function -----------------------
 		/// Purpose: To return the hours worked
@@ -194,13 +203,13 @@ class HourlyEmployee : public Employee
 		/// Purpose: read data from a persistence file
 		/// Returns:
 		///---------------------------End-------------------------------
-		void ReadData(ifstream&);
+		void ReadData(fstream&);
 
 		///--------------------WriteData Function---------------------
 		/// Purpose: write data to a persistence file
 		/// Returns:
 		///---------------------------End-------------------------------
-		void WriteData(ofstream&);
+		void WriteData(fstream&);
 
 		///--------------------Calculation Function---------------------
 		/// Purpose: calculate and return an employees net pay
@@ -217,14 +226,16 @@ class HourlyEmployee : public Employee
 };
 
 
-///------------------- SalaryEmployee class------------------
-/// Purpose: Keep track of employee information & compute pay //TODO Fix
+///------------------- Sales class------------------
+/// Purpose: Keep track of employee information & compute pay
 ///-------------------End---------------------------------
-class SalaryEmployee : public Employee
+class Sales : public Employee
 {
 	//---------------- variable declarations --------------------
 	private:
-		double _weeklySalary;
+		double _baseSalary;
+		double _grossSales;
+		double _commission;
 
 	//---------------- function prototypes --------------------
 	public:
@@ -232,40 +243,66 @@ class SalaryEmployee : public Employee
 		/// Purpose: To initialize all data members to their default
 		/// Parameters: None
 		///-------------------------- End ------------------------------
-		SalaryEmployee(void);
+		Sales(void);
 
 		///----------------- Constructor -----------------------
 		/// Purpose: To create an employee object given its parameters
 		/// Parameters: integer employeeNumber,
 		///				strings for name, address, phone number
-		///				double for salary
+		///				doubles for _baseSalary,_grossSales, _commission
 		///-------------------------- End ------------------------------
-		SalaryEmployee(int, string, string, string, double);
+		Sales(int, string, string, string, double, double, double);
 
 		///-------------------- Getter Function -----------------------
-		/// Purpose: To return the weekly salary
-		/// Returns: double as wrrkly salary
+		/// Purpose: To return the base salary
+		/// Returns: double as base salary
 		///-------------------------- End -----------------------------
-		double GetWeeklySalary(void);
+		double GetBaseSalary(void);
 
 		///-------------------- Setter Function -----------------------
-		/// Purpose: To set the weekly salary
-		/// Parameters: double weekly salary
+		/// Purpose: To set the base salary
+		/// Parameters: double base salary
 		/// Returns: void
 		///-------------------------- End ------------------------------
-		void SetWeeklySalary(double);
+		void SetBaseSalary(double);
+
+		///-------------------- Getter Function -----------------------
+		/// Purpose: To return the gross sales
+		/// Returns: double as gross sales
+		///-------------------------- End -----------------------------
+		double GetGrossSales(void);
+
+		///-------------------- Setter Function -----------------------
+		/// Purpose: To set the gross sales
+		/// Parameters: double gross sales
+		/// Returns: void
+		///-------------------------- End ------------------------------
+		void SetGrossSales(double);
+
+		///-------------------- Getter Function -----------------------
+		/// Purpose: To return the commission
+		/// Returns: double as commission
+		///-------------------------- End -----------------------------
+		double GetCommission(void);
+
+		///-------------------- Setter Function -----------------------
+		/// Purpose: To set the commission
+		/// Parameters: double commission
+		/// Returns: void
+		///-------------------------- End ------------------------------
+		void SetCommission(double);
 
 		///--------------------ReadData Function---------------------
 		/// Purpose: read data from a persistence file
 		/// Returns:
 		///---------------------------End-------------------------------
-		void ReadData(ifstream&);
+		void ReadData(fstream&);
 
 		///--------------------WriteData Function---------------------
 		/// Purpose: write data to a persistence file
 		/// Returns:
 		///---------------------------End-------------------------------
-		void WriteData(ofstream&);
+		void WriteData(fstream&);
 
 		///--------------------Calculation Function---------------------
 		/// Purpose: calculate and return an employees net pay
@@ -281,4 +318,69 @@ class SalaryEmployee : public Employee
 		void PrintCheck();
 };
 
-#endif  // EMPLOYEES_H_
+
+///------------------- Salary class------------------
+/// Purpose: Keep track of employee information & compute pay //TODO Fix
+///-------------------End---------------------------------
+class Salary : public Employee
+{
+	//---------------- variable declarations --------------------
+private:
+	double _monthlySalary;
+
+	//---------------- function prototypes --------------------
+public:
+	///----------------- Default Constructor -----------------------
+	/// Purpose: To initialize all data members to their default
+	/// Parameters: None
+	///-------------------------- End ------------------------------
+	Salary(void);
+
+	///----------------- Constructor -----------------------
+	/// Purpose: To create an employee object given its parameters
+	/// Parameters: integer employeeNumber,
+	///				strings for name, address, phone number
+	///				double for salary
+	///-------------------------- End ------------------------------
+	Salary(int, string, string, string, double);
+
+	///-------------------- Getter Function -----------------------
+	/// Purpose: To return the monthly salary
+	/// Returns: double as monthly salary
+	///-------------------------- End -----------------------------
+	double GetMonthlySalary(void);
+
+	///-------------------- Setter Function -----------------------
+	/// Purpose: To set the Monthly salary
+	/// Parameters: double Monthly salary
+	/// Returns: void
+	///-------------------------- End ------------------------------
+	void SetMonthlySalary(double);
+
+	///--------------------ReadData Function---------------------
+	/// Purpose: read data from a persistence file
+	/// Returns:
+	///---------------------------End-------------------------------
+	void ReadData(fstream&);
+
+	///--------------------WriteData Function---------------------
+	/// Purpose: write data to a persistence file
+	/// Returns:
+	///---------------------------End-------------------------------
+	void WriteData(fstream&);
+
+	///--------------------Calculation Function---------------------
+	/// Purpose: calculate and return an employees net pay
+	/// Returns: double as net pay
+	///---------------------------End-------------------------------
+	virtual double CalcPay(void);
+
+	///--------------------PrintCheck Function---------------------
+	/// Purpose: output the employees name, net pay for pay period, hours worked, and wage.
+	/// Parameters: None
+	/// Returns: None
+	///---------------------------End-------------------------------
+	void PrintCheck();
+};
+
+#endif  // EMPLOYEE_H_

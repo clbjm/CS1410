@@ -52,17 +52,17 @@ MyVector::~MyVector()
 	_pData = NULL;
 }
 
-int MyVector::size()
+int MyVector::Size()
 {
 	//returns the size of your vector.
 	return _size;
 }
-int MyVector::capacity()
+int MyVector::Capacity()
 {
 	//returns the capacity of the vector.
 	return _capacity;
 }
-void MyVector::clear()
+void MyVector::Clear()
 {
 	//deletes all of the elements from the vector and resets its size to zero and its capacity to two.
 
@@ -79,7 +79,7 @@ void MyVector::clear()
 	_size = 0;
 }
 
-void MyVector::push_back(int n)
+void MyVector::Push_Back(int n)
 {
 
 	//check to be sure that there is room in the array for the new value
@@ -119,7 +119,7 @@ void MyVector::push_back(int n)
 	}
 }
 
-int MyVector::at(int n)
+int MyVector::ValueAt(int n)
 {
 	//returns the value of the element at position n in the vector. 
 	//If the index n is greater than the size( ) of the vector, 

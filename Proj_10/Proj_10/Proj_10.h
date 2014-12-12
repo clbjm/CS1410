@@ -22,22 +22,22 @@
 #include <cstdlib>//for POSIX compat
 using namespace std;
 
-///--------------------TestingRecursion Driver Function---------------------
+///--------------------Menu Driver Function---------------------
 /// Purpose: Test a recursive function
 /// Returns: None
 ///---------------------------End-------------------------------
-void TestingRecursion(void);
+void Menu(void);
 
-///--------------------index_of Function---------------------
+///--------------------Index_Of Function---------------------
 /// Purpose: Looks for a string of characters within another string, acts as a wrapper for a recursive function
 /// Parameters: A string to search in and a string to search for
 /// Returns: An integer representing the index of the substring or -1 if it's not found
 ///---------------------------End-------------------------------
-int index_of(string s, string t);
+int Index_Of(string s, string t);
 
-///--------------------index_of (recursive) Function---------------------
+///--------------------Index_Of (recursive) Function---------------------
 /// Purpose: Looks for a string of characters within another string
 /// Parameters: A string to search in and a string to search for, int for current index.
 /// Returns: An integer representing the index of the substring or -1 if it's not found
 ///---------------------------End-------------------------------
-int index_of(string s, string t, int i);
+int Index_Of(string s, string t, int i);

@@ -33,13 +33,13 @@ const char CHARACTER = 'a';
 // Returns: 0
 int main()
 {
-	TestingRecursion();
+	Menu();
 	system("PAUSE");
 	return 0;
 }//End main()
 
 
-void TestingRecursion()
+void Menu()
 {
 	string mainString = "";
 	string subString = "";
@@ -54,7 +54,7 @@ void TestingRecursion()
 	//place the value in string temp
 	getline(cin, subString);
 	//count for result
-	int count = index_of(mainString, subString);
+	int count = Index_Of(mainString, subString);
 	//test to see if it was found
 	if (count < 0)
 	{
@@ -68,13 +68,13 @@ void TestingRecursion()
 }
 
 
-int index_of(string str, string subStr)
+int Index_Of(string str, string subStr)
 {
 	// function calls itself, shortens the string by one
-	return index_of(str, subStr, 0);
+	return Index_Of(str, subStr, 0);
 }
 
-int index_of(string str, string subStr, int index)
+int Index_Of(string str, string subStr, int index)
 {
 	//test if there are enough remaining characters in the string for a match
 	if ((str.length() - index) < subStr.length())
@@ -89,7 +89,7 @@ int index_of(string str, string subStr, int index)
 	else
 	{
 		//recursively calls itself, increasing the index count in the next iteration by one.
-		return index_of(str, subStr, index + 1);// function calls itself
+		return Index_Of(str, subStr, index + 1);// function calls itself
 	}
 	return -1;
 }

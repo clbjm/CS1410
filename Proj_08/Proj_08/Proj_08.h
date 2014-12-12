@@ -26,10 +26,35 @@
 #include <cstdlib>//for POSIX compat
 
 #include "Utils.h"
+#include "FileIO.h"
 #include "Employee.h"
 
 ///--------------------TestEmployee Driver Function---------------------
 /// Purpose: test the employee class & methods
 /// Returns: void
-///---------------------------End-------------------------------
-bool TestEmployee(void);
+///---------------------------End---------------------------------------
+void TestEmployee(void);
+
+///--------------------MenuOne function---------------------------------
+/// Purpose: Open or create database files
+/// Returns void
+///---------------------------End---------------------------------------
+void MenuOne(FileIO*);
+
+///--------------------MenuTwo function---------------------------------
+/// Purpose: Saves or Restores Database file
+/// Returns void
+///---------------------------End---------------------------------------
+void MenuTwo(FileIO*);
+
+///--------------------MenuThree function---------------------------------
+/// Purpose: Moves the file pointer in the open database
+/// Returns void
+///---------------------------End---------------------------------------
+void MenuThree(FileIO*);
+
+///--------------------MenuFour function---------------------------------
+/// Purpose: Prints paychecks
+/// Returns void
+///---------------------------End---------------------------------------
+void MenuFour(FileIO*, vector<Employee*>&);

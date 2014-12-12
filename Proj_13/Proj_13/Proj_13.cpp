@@ -1,11 +1,11 @@
 //============================================================================
-// Name:		Proj_09.h
+// Name:		Proj_13.h
 // Purpose:		Test Employee Inheritance
 // Version:		1.0
 // Author:		Kevin S. O'Day
 // Course:		CS 1410 Section 002
 // Instructor:	Dennis Fairclough
-// Project:		Proj_09
+// Project:		Proj_13
 // Date:		November 2014
 // Date:		11/26/14 9:59 AM
 //============================================================================
@@ -16,7 +16,7 @@
 // this policy.
 //----------------------------------------------------------------------------
 
-#include "Proj_09.h"
+#include "Proj_13.h"
 
 const double FEDERAL_RATE = 0.2;
 const double STATE_RATE = 0.075;
@@ -185,21 +185,21 @@ void MenuTwo(FileIO* fileIO)
 				//Sales sa3(4, "Dopey Dwarf", "Hogwarts", "910-8765", 1000); //these parameters don't match the type
 
 				//Create a vector for employee pointers and add all the employees to it
-				vector<Employee*> employeeDB;
-				employeeDB.push_back(h1);
-				employeeDB.push_back(s1);
-				employeeDB.push_back(sa1);
-				employeeDB.push_back(h2);
-				employeeDB.push_back(s2);
-				employeeDB.push_back(h3);
-				employeeDB.push_back(sa2);
-				employeeDB.push_back(s3);
-				employeeDB.push_back(h4);
+				MyVector<Employee*> employeeDB;
+				employeeDB.Push_Back(h1);
+				employeeDB.Push_Back(s1);
+				employeeDB.Push_Back(sa1);
+				employeeDB.Push_Back(h2);
+				employeeDB.Push_Back(s2);
+				employeeDB.Push_Back(h3);
+				employeeDB.Push_Back(sa2);
+				employeeDB.Push_Back(s3);
+				employeeDB.Push_Back(h4);
 
 				//The four Hourly, three Salary and two Sales employee objects listed above will be written to the file
 				try
 				{
-					for (unsigned int i = 0; i < employeeDB.size(); i++)
+					for (int i = 0; i < employeeDB.Size(); i++)
 					{
 						fileIO->WriteDB(employeeDB[i]);
 					}
@@ -221,7 +221,7 @@ void MenuTwo(FileIO* fileIO)
 			{
 				// If the user selects the second option, your program should
 				//create a vector of employee pointers
-				vector<Employee*> employeeDB;
+				MyVector<Employee*> employeeDB;
 				// the file should already be open
 				try
 				{
@@ -238,7 +238,7 @@ void MenuTwo(FileIO* fileIO)
 						Employee* ePtr = NULL;
 						more = fileIO->ReadDB(ePtr);
 						//add the employee pointer to the vector
-						if (more) employeeDB.push_back(ePtr);
+						if (more) employeeDB.Push_Back(ePtr);
 					} while (more);
 				}
 				catch (FileException& e)
@@ -246,7 +246,7 @@ void MenuTwo(FileIO* fileIO)
 					cout << e.GetMessage() << endl;
 				}
 				//option to print database
-				MenuFour(fileIO, employeeDB);
+				MenuFour(fileIO, &employeeDB);
 			}
 				valid = true;
 				break;
@@ -322,7 +322,7 @@ void MenuThree(FileIO* fileIO)
 	} while (!valid);
 }
 
-void MenuFour(FileIO* fileIO, vector<Employee*>& employeeDB)
+void MenuFour(FileIO* fileIO, MyVector<Employee*>* employeeDB)
 {
 	bool valid = false;
 	int choice;
@@ -343,21 +343,18 @@ void MenuFour(FileIO* fileIO, vector<Employee*>& employeeDB)
 					// If the user selects the print option, your program should
 					//Position the file pointer at the front of the file
 					// Call the PrintCheck() function for each of the new objects.
-					for (unsigned int i = 0; i < employeeDB.size(); i++)
+					for (int i = 0; i < employeeDB->Size(); i++)
 					{
 						system("CLS");
-						Employee* ePtr = employeeDB[i];
+						Employee* ePtr = employeeDB->ValueAt(i);
 						ePtr->PrintCheck();
 						//Pause
 						Pause();
 					}
 
 					// delete the objects and clear the array
-					for (unsigned int i = 0; i < employeeDB.size(); i++)
-					{
-						delete employeeDB[i];
-						employeeDB[i] = NULL;
-					}
+					employeeDB->Clear();
+
 				}
 				catch (FileException& e)
 				{

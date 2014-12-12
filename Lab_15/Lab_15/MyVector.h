@@ -1,8 +1,8 @@
 //============================================================================
-// File Prolog
+// Project Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
-// Project: Proj_13
+// Project: Lab_15
 // Purpose: Templatized vector
 // Date: December 2014 
 // Date: 12/09/14 9:59 AM
@@ -24,119 +24,119 @@ const int GROW_SIZE = 2;
 template<typename T>
 class MyVector
 {
-private:
-	//pointer of type T
-	T* _pData = NULL;
-	//the current number of elements in the array
-	int _size;
-	//the total current capacity of the array
-	int _capacity;
+	private:
+		//pointer of type T
+		T* _pData = NULL;
+		//the current number of elements in the array
+		int _size;
+		//the total current capacity of the array
+		int _capacity;
 
-public:
+	public:
 
-	///----------------- Default Constructor -----------------------
-	/// Purpose: To initialize all data members to their default values
-	/// Parameters: None
-	///-------------------------- End ------------------------------
-	MyVector();
+		///----------------- Default Constructor -----------------------
+		/// Purpose: To initialize all data members to their default values
+		/// Parameters: None
+		///-------------------------- End ------------------------------
+		MyVector();
 
-	///----------------- Copy Constructor -----------------------
-	/// Purpose: Facilitate the copying of a MyVector object
-	/// Parameters: MyVector object to be copied
-	///-------------------------- End ------------------------------
-	MyVector(MyVector&);
+		///----------------- Copy Constructor -----------------------
+		/// Purpose: Facilitate the copying of a MyVector object
+		/// Parameters: MyVector object to be copied
+		///-------------------------- End ------------------------------
+		MyVector(MyVector&);
 
-	///----------------- Constructor -----------------------
-	/// Purpose: To construct a MyVector object, setting its capacity to provided value
-	/// Parameters: integer for capacity
-	///-------------------------- End ------------------------------
-	MyVector(int);
+		///----------------- Constructor -----------------------
+		/// Purpose: To construct a MyVector object, setting its capacity to provided value
+		/// Parameters: integer for capacity
+		///-------------------------- End ------------------------------
+		MyVector(int);
 
-	///----------------- Destructor -----------------------
-	/// Purpose: To delete dynamically allocated storage, prevent leaks.
-	/// Parameters: none
-	///-------------------------- End ------------------------------
-	virtual ~MyVector();
+		///----------------- Destructor -----------------------
+		/// Purpose: To delete dynamically allocated storage, prevent leaks.
+		/// Parameters: none
+		///-------------------------- End ------------------------------
+		virtual ~MyVector();
 
-	///--------------------size Function---------------------
-	/// Purpose: get the current number of elements in the array
-	/// Parameters: none
-	/// Returns: integer current number of elements in the array
-	///---------------------------End-------------------------------
-	int Size() const;
+		///--------------------size Function---------------------
+		/// Purpose: get the current number of elements in the array
+		/// Parameters: none
+		/// Returns: integer current number of elements in the array
+		///---------------------------End-------------------------------
+		int Size() const;
 
-	///--------------------capacity Function---------------------
-	/// Purpose: get the total capacity of the array
-	/// Parameters: none
-	/// Returns: integer total capacity of the array
-	///---------------------------End-------------------------------
-	int Capacity() const;
+		///--------------------capacity Function---------------------
+		/// Purpose: get the total capacity of the array
+		/// Parameters: none
+		/// Returns: integer total capacity of the array
+		///---------------------------End-------------------------------
+		int Capacity() const;
 
-	///--------------------clear Function---------------------
-	/// Purpose: Clar all the elements in the array, reset size and capacity to default
-	/// Parameters: none
-	/// Returns: none
-	///---------------------------End-------------------------------
-	void Clear();
+		///--------------------clear Function---------------------
+		/// Purpose: Clar all the elements in the array, reset size and capacity to default
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End-------------------------------
+		void Clear();
 
-	///--------------------Push_Back Function---------------------
-	/// Purpose: add the  value to the end of the array, grow as needed
-	/// Parameters: integer to add to the array
-	/// Returns: none
-	///---------------------------End-------------------------------
-	void Push_Back(const T&);
+		///--------------------Push_Back Function---------------------
+		/// Purpose: add the  value to the end of the array, grow as needed
+		/// Parameters: integer to add to the array
+		/// Returns: none
+		///---------------------------End-------------------------------
+		void Push_Back(const T&);
 
-	///--------------------ValueAt Function-------------------------------------------------
-	/// Purpose: Returns the value of the element at given index
-	/// Parameters: integer for index
-	/// Returns: value of type T at given index, throws exception if index is greater than size
-	///---------------------------End--------------------------------------------------
-	T ValueAt(int) const;
+		///--------------------ValueAt Function-------------------------------------------------
+		/// Purpose: Returns the value of the element at given index
+		/// Parameters: integer for index
+		/// Returns: value of type T at given index, throws exception if index is greater than size
+		///---------------------------End--------------------------------------------------
+		T ValueAt(int) const;
 
-	///--------------------Copy Function-------------------------------------------------
-	/// Purpose: Copies the object
-	/// Parameters: Reference to a MyVector object
-	/// Returns: none
-	///---------------------------End--------------------------------------------------
-	void Copy(MyVector&);
+		///--------------------Copy Function-------------------------------------------------
+		/// Purpose: Copies the object
+		/// Parameters: Reference to a MyVector object
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void Copy(MyVector&);
 
-	///--------------------Free Function-------------------------------------------------
-	/// Purpose: Frees (Deletes the pointers) the memory associated with the object
-	/// Parameters: none
-	/// Returns: none
-	///---------------------------End--------------------------------------------------
-	void Free(void);
+		///--------------------Free Function-------------------------------------------------
+		/// Purpose: Frees (Deletes the pointers) the memory associated with the object
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void Free(void);
 
-	///-------------------- assignment operator overloading Function -----------------------
-	/// Purpose: Assigns the values of one MyVector object to another
-	/// Returns: Reference to MyVector object
-	///-------------------------- End ------------------------------
-	MyVector& operator = (MyVector&);
+		///-------------------- assignment operator overloading Function -----------------------
+		/// Purpose: Assigns the values of one MyVector object to another
+		/// Returns: Reference to MyVector object
+		///-------------------------- End ------------------------------
+		MyVector& operator = (MyVector&);
 
-	///--------------------pop_back Function-------------------------------------------------
-	/// Purpose: This function removes the last integer pushed into the vector. 
-	///			The size of the vector is reduced by one.
-	///			The function does nothing if the vector is empty.
-	/// Parameters: none
-	/// Returns: none
-	///---------------------------End--------------------------------------------------
-	void Pop_Back();
+		///--------------------pop_back Function-------------------------------------------------
+		/// Purpose: This function removes the last integer pushed into the vector. 
+		///			The size of the vector is reduced by one.
+		///			The function does nothing if the vector is empty.
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void Pop_Back();
 
-	///--------------------last Function-------------------------------------------------
-	/// Purpose: This function returns the last value pushed into the vector, 
-	///			but it does not remove it. 
-	///			Do not worry about the case where the vector is empty.
-	/// Parameters: none
-	/// Returns: type T
-	///---------------------------End--------------------------------------------------
-	T Last();
+		///--------------------last Function-------------------------------------------------
+		/// Purpose: This function returns the last value pushed into the vector, 
+		///			but it does not remove it. 
+		///			Do not worry about the case where the vector is empty.
+		/// Parameters: none
+		/// Returns: type T
+		///---------------------------End--------------------------------------------------
+		T Last();
 
-	///--------------------subscript operator overloading Function----------------------
-	/// Purpose: This function overloads the [] operator we use to index into an array. 
-	/// Parameters: none
-	/// Returns: none
-	///---------------------------End--------------------------------------------------
-	T operator [](int) const;
+		///--------------------subscript operator overloading Function----------------------
+		/// Purpose: This function overloads the [] operator we use to index into an array. 
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		T operator [](int) const;
 };
 
 
@@ -239,7 +239,7 @@ void MyVector<T>::Push_Back(const T& value)
 		T* newArray = new T[_capacity * GROW_SIZE]{NULL};
 
 		//copy all of _pData into new Array
-		for (int count = _capacity; count > 0; count--)
+		for(int count = _capacity; count > 0; count--)
 		{
 			newArray[count - 1] = _pData[count - 1];
 		}
@@ -264,7 +264,7 @@ T MyVector<T>::ValueAt(int n) const
 	//this function should throw an exception.
 
 	//check to see if the given index is outside the range of the array
-	if (n > this->_size - 1) throw n;
+	if(n > this->_size - 1) throw n;
 
 	//if its in range, return the value at the given index
 	return this->_pData[n];

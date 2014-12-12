@@ -37,6 +37,12 @@ using namespace std;
 // Returns: Validated integer
 int GetInputInt(string);
 
+// The GetInputChar method
+// Purpose: To get a character from the console, validate.
+// Parameters: String containing the prompt message for the user
+// Returns: Validated character (integer)
+int GetInputChar(string);
+
 // The StringToValidInt method
 // Purpose: Converts a string to an integer if it is valid
 // Parameters: String reference containing the characters to be converted
@@ -48,6 +54,12 @@ int StringToValidInt(string&);
 // Parameters: String reference containing the characters to be converted
 // Returns: Validated double
 double StringToValidDouble(string&);
+
+// The StringToValidChar method
+// Purpose: Converts a string to a character if it is valid
+// Parameters: String reference containing the characters to be converted
+// Returns: Validated character
+int StringToValidChar(string&);
 
 // The StreamToValidInt method
 // Purpose: Converts a string to an integer if it is valid
@@ -75,10 +87,8 @@ void SplitString(string&, char, vector <string>&);
 
 // The GetInputFileName method
 // Purpose: To get a string from the console and make sure it is a valid file name
-// Parameters: String containing the prompt message for the user
 // Returns: Validated string for file name
-string GetInputFileName(string);
-
+string GetInputFileName();
 
 // The GetValidReadFile method
 // Purpose: Test that the file opened without error

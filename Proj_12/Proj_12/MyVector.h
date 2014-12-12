@@ -7,7 +7,6 @@
 // Date: December 2014 
 // Date: 12/09/14 9:59 AM
 //============================================================================
-
 // I declare that the following source code was written by me, or provided
 // by the instructor for this project. I understand that copying 
 // source code from any other source constitutes cheating, and that I will
@@ -62,35 +61,35 @@ class MyVector
 		/// Parameters: none
 		/// Returns: integer current number of elements in the array
 		///---------------------------End-------------------------------
-		int size() const;
+		int Size() const;
 
 		///--------------------capacity Function---------------------
 		/// Purpose: get the total capacity of the array
 		/// Parameters: none
 		/// Returns: integer total capacity of the array
 		///---------------------------End-------------------------------
-		int capacity() const;
+		int Capacity() const;
 
 		///--------------------clear Function---------------------
 		/// Purpose: Clar all the elements in the array, reset size and capacity to default
 		/// Parameters: none
 		/// Returns: none
 		///---------------------------End-------------------------------
-		void clear();
+		void Clear();
 
 		///--------------------push_back Function---------------------
 		/// Purpose: add the integer value to the end of the array, grow as needed
 		/// Parameters: integer to add to the array
 		/// Returns: none
 		///---------------------------End-------------------------------
-		void push_back(int);
+		void Push_Back(int);
 
-		///--------------------at Function-------------------------------------------------
+		///--------------------ValueAt Function-------------------------------------------------
 		/// Purpose: Returns the value of the element at given index
 		/// Parameters: integer for index
 		/// Returns: integer at given index, throws exception if index is greater than size
 		///---------------------------End--------------------------------------------------
-		int at(int) const;
+		int ValueAt(int) const;
 
 		///--------------------Copy Function-------------------------------------------------
 		/// Purpose: Copies the object

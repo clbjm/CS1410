@@ -7,7 +7,6 @@
 // Date: December 2014 
 // Date: 12/09/14 9:59 AM
 //============================================================================
-
 // I declare that the following source code was written by me, or provided
 // by the instructor for this project. I understand that copying 
 // source code from any other source constitutes cheating, and that I will
@@ -15,6 +14,9 @@
 // this policy.
 //----------------------------------------------------------------------
 
+// --------------------------------------------------------
+// DO NOT CHANGE ANY CODE PAST THIS POINT
+//---------------------------------------------------------
 #include <iostream>
 #include "MyVector.h"     
 using namespace std;
@@ -22,16 +24,21 @@ using namespace std;
 // the printV function
 // used to test the copy constructor
 // parameter: a MyVector object
-void printV(MyVector);
+void PrintV(MyVector);
+void Menu();
 
-int main()
+void main()
+{
+	Menu();
+}
+void Menu()
 {
 	cout << "\nCreating a vector Sam of size 4.";
 	MyVector sam(4);
 
 	cout << "\nPush 12 values into the vector.";
 	for (int i = 0; i < 12; i++)
-		sam.push_back(i);
+		sam.Push_Back(i);
 
 	cout << "\nHere is sam: ";
 	cout << sam;
@@ -41,7 +48,7 @@ int main()
 	MyVector joe(4);
 	cout << "\nPush 6 values into the vector.";
 	for (int i = 0; i < 6; i++)
-		joe.push_back(i * 3);
+		joe.Push_Back(i * 3);
 
 	cout << "\nHere is joe: ";
 	cout << joe;
@@ -59,15 +66,14 @@ int main()
 	cout << "\n---------------\n";
 
 	// pass a copy of sam by value
-	printV(sam);
+	PrintV(sam);
 
 
 	cout << endl;
 	system("PAUSE");
-	return 0;
 }
 
-void printV(MyVector v)
+void PrintV(MyVector v)
 {
 	cout << "\n--------------------\n";
 	cout << "Printing a copy of a vector\n";
