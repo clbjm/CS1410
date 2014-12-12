@@ -30,7 +30,7 @@ Supplies::Supplies(): Node()
 	cout << classname << DEFAULT_CONSTRUCTOR << endl;
 }
 
-Supplies::Supplies(int quantity, string name, string measure, int number, int reQuantity) : Node(number)
+Supplies::Supplies(int quantity, string measure, string name, int number, int reQuantity) : Node(number)
 {
 	_supplyName = name;
 	_supplyUnitMeasure = measure;
@@ -42,8 +42,6 @@ Supplies::Supplies(int quantity, string name, string measure, int number, int re
 
 Supplies::~Supplies()
 {
-	//free up all the dynamically allocated memory.
-	Free();
 	string classname = typeid(*this).name();
 	cout << classname << DESTRUCTOR << endl;
 }
@@ -91,11 +89,11 @@ void Supplies::SetSupplyUnitMeasure(const string& supplyUnitMeasure)
 string Supplies::ToString(void)
 {
 	ostringstream outs;
-	string classname = typeid(*this).name();
-	outs << classname.c_str() << endl;
-	outs << _supplyName.c_str() << endl;
-	outs << _supplyUnitMeasure.c_str() << endl;
-	outs << _quantity << endl;
+	int number = Node::GetNumber();
+	outs << number << " ";
+	outs << _supplyName.c_str() << " ";
+	outs << _supplyUnitMeasure.c_str() << " ";
+	outs << _quantity << " ";
 	outs << _reorderQuantity << endl;
 	return outs.str();
 }
@@ -105,8 +103,6 @@ Supplies& Supplies::operator =(Supplies& rho)
 	// check to see if this object is equal to the right hand object
 	if (this != &rho)
 	{
-		//free the memory in this object
-		Free();
 		//copy everything (including the dynamically allocated memory) in the rho object
 		Copy(rho);
 	}

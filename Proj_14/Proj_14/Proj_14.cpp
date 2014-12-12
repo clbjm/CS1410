@@ -65,7 +65,7 @@ void ProjTestGrocery()
 	Node* _tempNode = groceries.RemoveNode(2);
 	cout << "Removed Node -> " << _tempNode->ToString() << endl;
 	PrintNode(_tempNode);
-	delete _tempNode;
+	//delete _tempNode;
 	cout << "\nThe original nodes in the List:\n";
 	PrintList(groceries);
 	cout << "\n----------------------------------\n";
@@ -78,7 +78,6 @@ void ProjTestGrocery()
 
 	PrintList(groceries);
 	cout << "\n----------------------------------\n";
-
 	// test pop-front
 	cout << "\nRemoving the first node from the list.\n";
 	cout << "\n----------------------------------\n";
@@ -151,8 +150,7 @@ void ProjTestGrocery()
 	cout << "\n-------------------------------------------\n";
 	//supply.ClearList(); TODO Had to fix this in order for it to work! note this.
 	hardware.ClearList();
-	//system("PAUSE");
-	cin.get();
+	system("PAUSE");
 }
 void ProjTestSupplies()
 {
@@ -254,15 +252,12 @@ void ProjTestSupplies()
 	cout << "\n-------------------------------------------\n";
 	supply.ClearList();
 	hardware.ClearList();
-	//system("PAUSE");
-	cin.get();
+	system("PAUSE");
 	//return 0;
 }
 void PrintList(Llist& lst)
 {
-
-	cout << lst.ToString();
-
+	cout <<  lst.ToString();
 }
 
 void PrintNode(Llist& lst, int n)
@@ -283,7 +278,6 @@ int main()
 	ProjTestGrocery();
 	ProjTestSupplies();
 	cout << endl;
-	//system("PAUSE");
-	cin.get();
+	system("PAUSE");
 	return 0;
 }

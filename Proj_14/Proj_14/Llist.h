@@ -20,8 +20,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <typeinfo>  //for 'typeid'
+#include <typeinfo>
 using namespace std;
+
+
 
 class Node
 {
@@ -132,6 +134,7 @@ class Node
 };
 
 
+
 class Llist
 {
 	private:
@@ -151,7 +154,7 @@ class Llist
 		/// Purpose: Facilitate the copying of a List object
 		/// Parameters: List object to be copied
 		///-------------------------- End ------------------------------
-		//Llist(Llist&);
+		Llist(Llist&);
 
 		///----------------- Constructor -----------------------
 		/// Purpose: To construct a List object, setting its capacity to provided value
@@ -185,13 +188,16 @@ class Llist
 		/// Parameters: none
 		/// Returns: a pointer to a Node
 		///---------------------------End--------------------------------------------------
-		Node* Pop_Front(void);		///-------------------- Pop_End Function-------------------------------------------------
+		Node* Pop_Front(void);
+		
+		///-------------------- Pop_End Function-------------------------------------------------
 		/// Purpose: removes the last node from the list, and returns a pointer to this Node. 
 		///			Important, do not delete the node in this function. 
 		///			Simply unlink and return it from the list.
 		/// Parameters: none
 		/// Returns: Pointer to a Node
-		///---------------------------End--------------------------------------------------		Node* Pop_End(void);
+		///---------------------------End--------------------------------------------------
+		Node* Pop_End(void);
 
 		//-------------------- Getter Function---------------------
 		/// Purpose: To get the pointer to the first node in the list
@@ -261,4 +267,4 @@ class Llist
 
 
 
-#endif /* LLIST_H_ */
+#endif // !LLIST_H_

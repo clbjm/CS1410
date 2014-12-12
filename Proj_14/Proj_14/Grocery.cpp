@@ -29,7 +29,7 @@ Grocery::Grocery(): Node()
 	cout << classname << DEFAULT_CONSTRUCTOR << endl;
 }
 
-Grocery::Grocery( int numUnits, string name, string unitMeasure, int number) : Node(number)
+Grocery::Grocery( int numUnits, string unitMeasure, string name, int number) : Node(number)
 {
 	_itemName = name;
 	_itemUnitMeasure = unitMeasure;
@@ -41,7 +41,7 @@ Grocery::Grocery( int numUnits, string name, string unitMeasure, int number) : N
 Grocery::~Grocery()
 {
 	//free up all the dynamically allocated memory.
-	Free();
+	//Free();
 	string classname = typeid(*this).name();
 	cout << classname << DESTRUCTOR << endl;
 }
@@ -79,14 +79,11 @@ void Grocery::SetNumberUnits(unsigned int numberUnits)
 string Grocery::ToString(void)
 {
 	ostringstream outs;
-	string classname = typeid(*this).name();
-	outs << classname.c_str() << endl;
-	outs << _numberUnits << endl;
-	outs << _itemUnitMeasure.c_str() << endl;
-	outs << _itemName.c_str() << endl;
 	int number = Node::GetNumber();
-	outs << number << endl;
-	
+	outs << number << " ";
+	outs << _itemName.c_str() << " ";
+	outs << _itemUnitMeasure.c_str() << " ";
+	outs << _numberUnits << endl;
 	return outs.str();
 }
 
@@ -95,8 +92,6 @@ Grocery& Grocery::operator = (Grocery& rho)
 	// check to see if this object is equal to the right hand object
 	if (this != &rho)
 	{
-		//free the memory in this object
-		Free();
 		//copy everything (including the dynamically allocated memory) in the rho object
 		Copy(rho);
 	}

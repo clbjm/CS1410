@@ -21,90 +21,6 @@ const string CONSTRUCTOR = " constructor.";
 const string DEFAULT_CONSTRUCTOR = " default constructor.";
 const string COPY_CONSTRUCTOR = " copy constructor.";
 
-
-
-//-----------------------------------------Node implementation-------------------------------------------
-
-Node::Node()
-{
-	_nextNode = NULL;
-	_prevNode = NULL;
-	_number = 0;
-	string classname = typeid(*this).name();
-	cout << classname << DEFAULT_CONSTRUCTOR << endl;
-}
-
-Node::Node(Node&)
-{
-	//Copy constructor
-}
-
-Node::Node(int number)
-{
-	_nextNode = NULL;
-	_prevNode = NULL;
-	_number = number;
-	string classname = typeid(*this).name();
-	cout << classname << CONSTRUCTOR << endl;
-}
-
-Node::~Node()
-{
-	Free();
-	string classname = typeid(*this).name();
-	cout << classname << DESTRUCTOR << endl;
-}
-
-Node* Node::GetNextNode() const
-{
-	return _nextNode;
-}
-
-void Node::SetNextNode(Node* nextPtr)
-{
-	_nextNode = nextPtr;
-}
-
-Node* Node::GetPrevNode() const
-{
-	return _prevNode;
-}
-
-void Node::SetPrevNode(Node* prevPtr)
-{
-	_prevNode = prevPtr;
-}
-
-int Node::GetNumber() const
-{
-	return _number;
-}
-
-void Node::SetNumber(int number)
-{
-	_number = number;
-}
-
-void Node::Copy(Node& node)
-{
-	_nextNode = node._nextNode;
-	_prevNode = node._prevNode;
-	_number = node._number;
-}
-
-void Node::Free(void)
-{
-	delete _nextNode;
-	_nextNode = NULL;
-	delete _prevNode;
-	_prevNode = NULL;
-}
-
-//-----------------------------------------End Node implementation-------------------------------------------
-
-
-
-
 //-----------------------------------------Llist implementation-------------------------------------------
 
 Llist::Llist()
@@ -116,9 +32,8 @@ Llist::Llist()
 	cout << classname << DEFAULT_CONSTRUCTOR << endl;
 }
 
-//Llist::Llist(Llist& lst)
-//{
-	/*
+Llist::Llist(Llist& lst)
+{
 	//--- Test for empty list ------------
 	if (lst._headNode == NULL)
 		return;
@@ -129,7 +44,7 @@ Llist::Llist()
 	//initialize _nodeCount
 	_nodeCount = 0;
 	//set _head & _end to first Node in lst
-	this->_headNode = this->_endNode = new Node(lst._headNode->GetNumber());  //First Node
+	//this->_headNode = this->_endNode = new Node(lst._headNode->GetNumber());  //First Node
 	//Node* tempPtr = lst._head;
 	//nCount, used to check that object reference count _nodeCount is working
 	_nodeCount++;
@@ -137,17 +52,17 @@ Llist::Llist()
 	Node* nodePtr = lst._headNode->GetNextNode(); //Second node
 	while (nodePtr != NULL)
 	{
-		tempNodePtr = new Node(nodePtr->GetNumber());
+		//tempNodePtr = new Node(nodePtr->GetNumber());
 		tempNodePtr->SetNextNode(this->_headNode);
 		this->_headNode = tempNodePtr;
 		nodePtr = nodePtr->GetNextNode();
 		_nodeCount++;
 	}
-	*/
+	
 	//print out the copy constructor message
-//	string classname = typeid(*this).name();
-//	cout << classname << COPY_CONSTRUCTOR << endl;
-//}
+	string classname = typeid(*this).name();
+	cout << classname << COPY_CONSTRUCTOR << endl;
+}
 
 Llist::Llist(int nodeCount)
 {
@@ -228,6 +143,7 @@ Node* Llist::Pop_Front(void)
 	//Simply unlink and return it from the list.
 }
 
+
 Node* Llist::Pop_End(void)
 {
 	if (_endNode == NULL)
@@ -244,8 +160,6 @@ Node* Llist::Pop_End(void)
 		//return a pointer to this Node.
 	}
 	return _endNode;
-	//do not delete the Node in this function. TODO how do i delete it?
-	//Simply unlink and return it from the list.
 }
 
 Node* Llist::FindNode(int int1)
@@ -304,10 +218,11 @@ void Llist::ClearList(void)
 	//clears the list and sets _headNode and _rearNode to NULL.
 	Node* nodePtr = _headNode;
 	Node* nextPtr = _headNode->GetNextNode();
-	while (nodePtr != NULL)
+	while (nextPtr != NULL)
 	{
 		//free the memory related to the node
-		nodePtr->Free();
+		delete nodePtr;
+		nodePtr = NULL;
 		nodePtr = nextPtr;
 		nextPtr = nodePtr->GetNextNode();
 		_nodeCount--;
@@ -326,18 +241,16 @@ Llist& Llist::operator = (Llist&)
 {
 }
 */
+
 string Llist::ToString()
 {
 	//returns the values of all member data of the Llist as a string.
 	ostringstream outs;
-	string classname = typeid(*this).name();
-	outs << classname.c_str() << endl;
 	Node* nodePtr = _headNode;
 	while (nodePtr != NULL)
 	{
 		//add the ToString Results of each node to the string
 		outs << nodePtr->ToString();
-		nodePtr->Free();
 		nodePtr = nodePtr->GetNextNode();
 	}
 	return outs.str();

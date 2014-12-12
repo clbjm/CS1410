@@ -18,9 +18,6 @@
 
 #include "Llist.h"
 
-/*
- *
- */
 class Supplies: public Node
 {
 	private:
