@@ -1,5 +1,5 @@
 //============================================================================
-// Project Prolog
+// File Prolog
 // Author: Kevin S. O'Day
 // Course: CS 1410 Section 002
 // Project: Proj_14
@@ -7,7 +7,6 @@
 // Date: December 2014 
 // Date: 12/09/14 9:59 AM
 //============================================================================
-
 // I declare that the following source code was written by me, or provided
 // by the instructor for this project. I understand that copying 
 // source code from any other source constitutes cheating, and that I will
@@ -15,22 +14,21 @@
 // this policy.
 //----------------------------------------------------------------------
 
+#ifndef LLIST_H_
+#define LLIST_H_
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <typeinfo>  //for 'typeid'
 using namespace std;
-
-
 
 class Node
 {
 	private:
 		Node* _nextNode;
 		Node* _prevNode;
-		unsigned int   _number;
-		//description of the item
-		string _description;
-		string _unitOfMeasure;
+		unsigned int _number;//unique
 
 	public:
 
@@ -50,7 +48,7 @@ class Node
 		/// Purpose: To construct a Node object with the provided parameters
 		/// Parameters: integer for capacity
 		///-------------------------- End ------------------------------
-		Node(int, string, string);
+		Node(int);
 
 		///----------------- Destructor -----------------------
 		/// Purpose: To delete dynamically allocated storage, prevent leaks.
@@ -58,46 +56,47 @@ class Node
 		///-------------------------- End ------------------------------
 		virtual ~Node();
 
-		///-------------------- Getter Function---------------------
-		/// Purpose: To Get the description of the node object
-		/// Returns: string reference to description
-		///---------------------------End-------------------------------
-		const string& GetDescription() const;
-
-		///-------------------- Setter Function---------------------
-		/// Purpose: To set the description of the node object
-		/// Parameters: string reference for description
-		/// Returns: none
-		///---------------------------End-------------------------------
-		void SetDescription(const string& description);
 
 		///-------------------- Getter Function---------------------
 		/// Purpose: To get the pointer to this object
 		/// Returns: pointer to this Node object
 		///---------------------------End-------------------------------
-		const Node*& GetNextNode() const;
+		Node* GetNextNode() const;
 
 		///-------------------- Setter Function---------------------
 		/// Purpose: To set the pointer to the next node object
 		/// Parameters: reference to the pointer for the next node object
 		/// Returns: none
 		///---------------------------End-------------------------------
-		void SetNextNode(const Node*&);
+		void SetNextNode(Node*);
+
+		///-------------------- pure virtual Getter Function---------------------
+		/// Purpose: To get the name of the node object
+		/// Returns: string name
+		///---------------------------End-------------------------------
+		virtual string& GetName() = 0;
+
+		///-------------------- pure virtual Setter Function---------------------
+		/// Purpose: To set the name of the node object
+		/// Parameters: reference to the string name
+		/// Returns: none
+		///---------------------------End-------------------------------
+		virtual void SetName(string&) = 0;
 
 		///-------------------- Getter Function---------------------
 		/// Purpose: To get the pointer to this object
 		/// Returns: pointer to this Node object
 		///---------------------------End-------------------------------
-		const Node*& GetPrevNode() const;
+		Node* GetPrevNode() const;
 
 		///-------------------- Setter Function---------------------
 		/// Purpose: To set the pointer to the next node object
 		/// Parameters: reference to the pointer for the next node object
 		/// Returns: none
 		///---------------------------End-------------------------------
-		void SetPrevNode(const Node*&);
+		void SetPrevNode(Node*);
 
-		//-------------------- Getter Function---------------------
+		///-------------------- Getter Function---------------------
 		/// Purpose: To get the number of units of the item represented by the node
 		/// Returns: integer number of items
 		///---------------------------End-------------------------------
@@ -110,33 +109,35 @@ class Node
 		///---------------------------End-------------------------------
 		void SetNumber(int number);
 
-		//-------------------- Getter Function---------------------
-		/// Purpose: To get the unit of measure (for description:'bread' unit might be 'loaves'
-		/// Returns: string reference to unit of measure
-		///---------------------------End-------------------------------
-		const string& GetUnitOfMeasure() const;
-
-		///-------------------- Setter Function---------------------
-		/// Purpose: To set the unit of measure (for description:'bread' unit might be 'loaves'
-		/// Parameters: string reference to unit of measure
-		/// Returns: none
-		///---------------------------End-------------------------------
-		void SetUnitOfMeasure(const string& unitOfMeasure);
-
 		///-------------------- ToString pure virtual function---------------------
 		/// Purpose: Pure virtual function
 		/// Parameters: none
 		/// Returns: none
 		///---------------------------End-------------------------------
-		string ToString() = 0;
+		virtual string ToString() = 0;
+
+		///--------------------Copy virtual Function---------------------------------------
+		/// Purpose: Copies the object
+		/// Parameters: Reference to a Node object
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		virtual void Copy(Node&);
+
+		///--------------------Free Function-------------------------------------------------
+		/// Purpose: Frees (Deletes the pointers) the memory associated with the object
+		/// Parameters: none
+		/// Returns: none
+		///---------------------------End--------------------------------------------------
+		void Free(void);
 };
 
-class List
+
+class Llist
 {
 	private:
 		Node* _headNode;
 		Node* _endNode;
-		unsigned int   _nodeCount;
+		unsigned int _nodeCount;
 
 	public:
 
@@ -144,50 +145,53 @@ class List
 		/// Purpose: To initialize all data members to their default values
 		/// Parameters: None
 		///-------------------------- End ------------------------------
-		List();
+		Llist();
 
 		///----------------- Copy Constructor -----------------------
 		/// Purpose: Facilitate the copying of a List object
 		/// Parameters: List object to be copied
 		///-------------------------- End ------------------------------
-		List(List&);
+		//Llist(Llist&);
 
 		///----------------- Constructor -----------------------
 		/// Purpose: To construct a List object, setting its capacity to provided value
 		/// Parameters: integer for capacity
 		///-------------------------- End ------------------------------
-		List(int);
+		Llist(int);
 
 		///----------------- Destructor -----------------------
 		/// Purpose: To delete dynamically allocated storage, prevent leaks.
 		/// Parameters: none
 		///-------------------------- End ------------------------------
-		virtual ~List();
+		virtual ~Llist();
 
 		///-------------------- Push_Front Function-------------------------------------------------
-		/// Purpose:
-		/// Parameters:
-		/// Returns:
+		/// Purpose:adds the node pointed to by the pointer to the front of the Llist
+		/// Parameters: Pointer to a Node
+		/// Returns: none
 		///---------------------------End--------------------------------------------------
 		void Push_Front(Node*);
 
-		///-------------------- Pop_Front Function-------------------------------------------------
-		/// Purpose:
-		/// Parameters:
-		/// Returns:
-		///---------------------------End--------------------------------------------------
-		void Pop_Front(void);
 		///-------------------- Push_End Function-------------------------------------------------
-		/// Purpose:
-		/// Parameters:
-		/// Returns:
+		/// Purpose: and adds the node pointed to by the pointer to the end of the list.
+		/// Parameters: Pointer to a Node
+		/// Returns: none
 		///---------------------------End--------------------------------------------------
-		void Push_End(Node*);
-		///-------------------- Pop_End Function-------------------------------------------------
-		/// Purpose:
-		/// Parameters:
-		/// Returns:
-		///---------------------------End--------------------------------------------------		void Pop_End(void);
+		void Push_End(Node*);
+
+		///-------------------- Pop_Front Function-------------------------------------------------
+		/// Purpose: removes the first node from the list, and returns a pointer to this Node
+		///			do not delete the Node in this function. Simply unlink and return it from the list
+		/// Parameters: none
+		/// Returns: a pointer to a Node
+		///---------------------------End--------------------------------------------------
+		Node* Pop_Front(void);		///-------------------- Pop_End Function-------------------------------------------------
+		/// Purpose: removes the last node from the list, and returns a pointer to this Node. 
+		///			Important, do not delete the node in this function. 
+		///			Simply unlink and return it from the list.
+		/// Parameters: none
+		/// Returns: Pointer to a Node
+		///---------------------------End--------------------------------------------------		Node* Pop_End(void);
 
 		//-------------------- Getter Function---------------------
 		/// Purpose: To get the pointer to the first node in the list
@@ -202,23 +206,23 @@ class List
 		Node* GetLast(void);
 
 		///-------------------- FindNode Function-------------------------------------------------
-		/// Purpose:
-		/// Parameters:
-		/// Returns:
+		/// Purpose: finds a Node with its number as a parameter
+		/// Parameters: int number of the node
+		/// Returns: returns the address of the Node if it can be found or a NULL if the Node cannot be found.
 		///---------------------------End--------------------------------------------------
 		Node* FindNode(int);
 
 		///-------------------- AddNode Function-------------------------------------------------
-		/// Purpose:
-		/// Parameters:
-		/// Returns:
+		/// Purpose: adds the Node, passed as a parameter, in front of the Node number, passed as a parameter.
+		/// Parameters: Pointer to a node to add, int node number to add in front of
+		/// Returns: none
 		///---------------------------End--------------------------------------------------
-		void AddNode(Node&, int);
+		void AddNode(Node*, int);
 
 		///-------------------- RemoveNode Function-------------------------------------------------
-		/// Purpose:  removes the Node with given number, as the parameter and returns the pointer to the removed Node.
-		/// Parameters:
-		/// Returns:
+		/// Purpose:  removes the Node with given number
+		/// Parameters: int number of the node to be removed
+		/// Returns:  returns the pointer to the removed Node.
 		///---------------------------End--------------------------------------------------
 		Node* RemoveNode(int);
 
@@ -233,17 +237,28 @@ class List
 		/// Parameters: reference to a list object
 		/// Returns: reference to a list object
 		///---------------------------End--------------------------------------------------
-		List& operator = (List&);
+		//Llist& operator = (Llist&);
 		///--------------------assignment operator overloading Function Function-------------
 		/// Purpose: overloads the assignment operator
 		/// Parameters: pointer to a list object
 		/// Returns: pointer to a list object
 		///---------------------------End--------------------------------------------------
-		List* operator = (List*);
+		//Llist* operator = (Llist*);
 		///--------------------ClearList Function-------------------------------------------------
-		/// Purpose: delete the items in the list
+		/// Purpose: clears the list and sets _headNode and _rearNode to NULL.
 		/// Parameters: none
 		/// Returns: none
 		///---------------------------End--------------------------------------------------
 		void ClearList(void);
+
+		///-------------------- ToString function---------------------
+		/// Purpose: returns the values of all member data of the Llist as a string
+		/// Parameters: none
+		/// Returns: all member data as a string
+		///---------------------------End-------------------------------
+		string ToString();
 };
+
+
+
+#endif /* LLIST_H_ */
