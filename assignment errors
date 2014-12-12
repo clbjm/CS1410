@@ -1,0 +1,57 @@
+
+Project 7 file, errors in driver code (obviously untested) 
+	" You must use my driver, without change."
+	"for (int i = 0; i < sam.size( ) + 1; i++)" (Size())
+	
+Project 8
+	There is no matching executable on Canvas
+	Many syntaxial errors, making sentence meaning ambiguous.
+	Salary ~ Salaried ?
+	CloseFile ~ CloseDB?
+	Employee numbers are not unique
+	Dopey Dwarf has wrong parameters
+		Hourly h1(1, "Harry Potter", "Privet Drive", "304-201-9090", 40.00, 12.00);
+		Salaried s1(2, "Albert Dumbledore", "Hogewarts", "404-803-1230", 1200.50);
+		Sales sa1(4, "Rotten Hagrid", "Hogwarts", "505-910-8765", 1000, 0.09, 100000.00);
+		Hourly h2(3, "Rogue Weasley", "The Burrow", "304-892-2000", 45.50, 10.00);
+		Salaried s2(4, "Rotten Hagrid", "Hogwarts", "601-910-8765", 1000.00);
+		Hourly h3(1, "Doc Dwarf", "Tree Root Drive", "505-301-9090", 40.00, 14.00);
+		Sales sa2(4, "Sleepy Dwarf", "Hogwarts", "505-910-8765", 1500.00, 0.07, 150000.00);
+		Salaried s3(2, "Happy Dwarf", "Hogewarts", "505-803-1230", 1200);
+		Hourly h4(3, "Grumpy Dwarf", "Tree Limb Drive", "505-892-2000", 50.75, 10.00);
+		Sales sa3(4, "Dopey Dwarf", "Hogwarts", "910-8765", 1000);
+		
+	Page 7 'Seek' makes no sense
+	Page 7 C>lose doesnt exist in the menu, its only Seek & Quit
+	
+Project #9 
+	Refers to the options menu created in Project #8 as having numbers, Project #8 uses characters.
+	The executable linked to does not match project 8 at all. (not the same project)
+	
+Lab #10 refers to Proj #13 as Linked List assignment (it's not), that's Project #14
+	Maintenance class is not in Project #14, It's 'Supplies' class.
+
+	
+The Lab #11 document is the web version Lab 10
+The Lab #12 refers to project #11 (as if it's future)
+	Asks to be submitted as Lab#11
+
+
+
+Proj #14 errors
+	"Please use these driver(s), unmodified, when you build your program."
+		Driver sectin of code substitutes Llist for List interchangably & inconsistently
+		
+		"PrintList create this stand-alone function and add it to the driver that has been provided for you."
+		"PrintNode, create this stand-alone function and add it to the driver that has been provided for you."
+		There is no Node::GetName() as referenced in the driver code! 4 times.
+		End of ProjTestGrocery() 
+			supply.ClearList(); //there is no 'supply'
+		Declaration and implementation of PrintList have differing signatures.
+		
+		PrintNode() declaration has conflicting comments (1st node or given number node?)
+			// Purpose: Prints out the contents for the 1st Node in the List
+			// Parameter: A list object, passed by value to test the copy constructor
+			// int is the _number of the node to print.
+
+Lab # 15 refers to Project #7 as being templatized (it is not)
